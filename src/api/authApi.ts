@@ -16,4 +16,8 @@ export class AuthApi {
       })
       .then((response) => response.data);
   }
+
+  public async fetchuser() {
+    return this.instance.get<IUser>("/auth/").then((response) => response.data);
+  }
 }

@@ -3,10 +3,11 @@ import { AxiosError } from "axios";
 import { authApi } from "../../api/api";
 import { RootState, AppThunk } from "../../store/store";
 import { IUser } from "../../types/apiTypes";
+import { LoadingStatuses } from "../../types/enums";
 
 export interface AuthState {
   user: IUser | null;
-  status: "success" | "loading" | "failed";
+  status: LoadingStatuses;
   authError: string | null;
 }
 
@@ -17,7 +18,7 @@ export interface ILoginParams {
 
 const initialState: AuthState = {
   user: null,
-  status: "success",
+  status: LoadingStatuses.PENDING,
   authError: null,
 };
 
@@ -28,7 +29,9 @@ export const login = createAsyncThunk(
   }
 );
 
-export const fetchUser = createAsyncThunk("auth/fetchUser", async () => {});
+export const fetchUser = createAsyncThunk("auth/fetchUser", async () => {
+  return authApi.fetchuser();
+});
 
 export const authSlice = createSlice({
   name: "auth",
@@ -37,25 +40,25 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
-        state.status = "loading";
+        state.status = LoadingStatuses.PENDING;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.status = "success";
+        state.status = LoadingStatuses.FULFILED;
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
         state.authError = (action.error as AxiosError).message;
-        state.status = "failed";
+        state.status = LoadingStatuses.REJECTED;
       })
       .addCase(fetchUser.pending, (state) => {
-        state.status = "loading";
+        state.status = LoadingStatuses.PENDING;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = "success";
+        state.status = LoadingStatuses.FULFILED;
         state.user = null;
       })
       .addCase(fetchUser.rejected, (state) => {
-        state.status = "failed";
+        state.status = LoadingStatuses.REJECTED;
       });
   },
 });

@@ -1,3 +1,9 @@
+export enum LoadingStatuses {
+  PENDING = "pending",
+  FULFILED = "fulfiled",
+  REJECTED = "rejected",
+}
+
 export enum Roles {
   MANAGER = "manager",
   WAITER = "waiter",
