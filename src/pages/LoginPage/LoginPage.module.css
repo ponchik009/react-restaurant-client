@@ -1,0 +1,23 @@
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 24px;
+
+  min-width: 20vw;
+}
+
+.title {
+  font-size: 32px;
+}
+
+/* .icon {
+  stroke-width: 1px;
+  stroke: #52ad0a;
+} */
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

@@ -1,9 +1,17 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { AppRoutes, RolesMenu } from "../../const/conts";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import ForbiddenPage from "../../pages/ErrorPages/ForbiddenPage/ForbiddenPage";
 import LoginPage from "../../pages/LoginPage/LoginPage";
-import TestPage from "../../pages/TestPage/TestPage";
+import MenuPage from "../../pages/ManagerPages/MenuPage/MenuPage";
+import ReportsPage from "../../pages/ManagerPages/ReportsPage/ReportsPage";
+import UsersPage from "../../pages/ManagerPages/UsersPage/UsersPage";
+import OrdersPage from "../../pages/WaiterPages/OrdersPage/OrdersPage";
 import { fetchUser } from "../../store/authSlice/authSlice";
+import { LoadingStatuses, Roles } from "../../types/enums";
+import NavbarPageWrapper from "../NavbarPageWrapper/NavbarPageWrapper";
+import PageWrapper from "../PageWrapper/PageWrapper";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const AppRouter = () => {
@@ -16,13 +24,63 @@ const AppRouter = () => {
 
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route
-        element={
-          <ProtectedRoute loadingStatus={status} redirectPath="/login" />
-        }
-      >
-        <Route path="/test" element={<TestPage />} />
+      <Route element={<PageWrapper />}>
+        <Route
+          element={
+            <ProtectedRoute
+              isLoading={status === LoadingStatuses.PENDING}
+              isSuccess={user !== null}
+              onSuccessRedirectPath="/"
+            />
+          }
+        >
+          <Route path={AppRoutes.login.url} element={<LoginPage />} />
+        </Route>
+        <Route
+          element={
+            <ProtectedRoute
+              isLoading={status === LoadingStatuses.PENDING}
+              isSuccess={user !== null}
+              onFailRedirectPath={AppRoutes.login.url}
+            />
+          }
+        >
+          <Route element={<NavbarPageWrapper />}>
+            <Route
+              path="/"
+              element={
+                <Navigate
+                  to={RolesMenu[user?.role.name || "manager"].main.url}
+                />
+              }
+            />
+            <Route
+              element={
+                <ProtectedRoute
+                  isLoading={false}
+                  isSuccess={user?.role.name === Roles.MANAGER}
+                  onFailRedirectPath={AppRoutes.forbidden.url}
+                />
+              }
+            >
+              <Route path={AppRoutes.users.url} element={<UsersPage />} />
+              <Route path={AppRoutes.menu.url} element={<MenuPage />} />
+              <Route path={AppRoutes.reports.url} element={<ReportsPage />} />
+            </Route>
+            <Route
+              element={
+                <ProtectedRoute
+                  isLoading={false}
+                  isSuccess={user?.role.name === Roles.WAITER}
+                  onFailRedirectPath={AppRoutes.forbidden.url}
+                />
+              }
+            >
+              <Route path={AppRoutes.orders.url} element={<OrdersPage />} />
+            </Route>
+            <Route path={AppRoutes.forbidden.url} element={<ForbiddenPage />} />
+          </Route>
+        </Route>
       </Route>
     </Routes>
   );

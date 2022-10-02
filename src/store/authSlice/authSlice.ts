@@ -33,6 +33,10 @@ export const fetchUser = createAsyncThunk("auth/fetchUser", async () => {
   return authApi.fetchuser();
 });
 
+export const logout = createAsyncThunk("auth/logout", async () => {
+  return authApi.logout();
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -44,10 +48,12 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = LoadingStatuses.FULFILED;
+        state.authError = null;
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
-        state.authError = (action.error as AxiosError).message;
+        console.log(action.error);
+        state.authError = "Неверные данные для входа!";
         state.status = LoadingStatuses.REJECTED;
       })
       .addCase(fetchUser.pending, (state) => {
@@ -55,9 +61,21 @@ export const authSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = LoadingStatuses.FULFILED;
-        state.user = null;
+        state.authError = null;
+        state.user = action.payload;
       })
       .addCase(fetchUser.rejected, (state) => {
+        state.status = LoadingStatuses.REJECTED;
+      })
+      .addCase(logout.pending, (state) => {
+        state.status = LoadingStatuses.PENDING;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.status = LoadingStatuses.FULFILED;
+        state.authError = null;
+        state.user = null;
+      })
+      .addCase(logout.rejected, (state) => {
         state.status = LoadingStatuses.REJECTED;
       });
   },
