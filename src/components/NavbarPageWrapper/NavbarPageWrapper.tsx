@@ -46,6 +46,7 @@ const NavbarPageWrapper = () => {
                       [styles.active]: menuItem.url === location.pathname,
                     })}
                     onClick={() => navigate(menuItem.url)}
+                    key={menuItem.url}
                   >
                     {menuItem.name}
                   </li>

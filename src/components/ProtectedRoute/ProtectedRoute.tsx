@@ -17,9 +17,24 @@ const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
   onFailRedirectPath,
   onSuccessRedirectPath,
 }) => {
+  const [isPreloaderShow, setIsPreloaderShow] = React.useState(false);
+  const timer = React.useRef<NodeJS.Timeout | null>(null);
+
+  React.useEffect(() => {
+    if (isLoading) {
+      timer.current && clearTimeout(timer.current);
+      timer.current = setTimeout(() => setIsPreloaderShow(true), 200);
+    } else {
+      timer.current && clearTimeout(timer.current);
+      setIsPreloaderShow(false);
+    }
+  }, [isLoading]);
+
+  if (isLoading && !isPreloaderShow) return null;
+
   return (
     <>
-      {isLoading ? (
+      {isLoading && isPreloaderShow ? (
         <PageWrapper>
           <Loader />
         </PageWrapper>

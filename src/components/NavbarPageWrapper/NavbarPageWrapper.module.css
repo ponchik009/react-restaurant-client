@@ -48,7 +48,8 @@
 
 .navitem {
   padding: 24px 0px;
-  width: 290px;
+  max-width: 290px;
+  width: 25%;
   border: 3px solid #b4b4b4;
   border-radius: 12px;
 

@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AppRoutes, RolesMenu } from "../../const/conts";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import ForbiddenPage from "../../pages/ErrorPages/ForbiddenPage/ForbiddenPage";
+import NotFoundPage from "../../pages/ErrorPages/NotFoundPage/NotFoundPage";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import MenuPage from "../../pages/ManagerPages/MenuPage/MenuPage";
 import ReportsPage from "../../pages/ManagerPages/ReportsPage/ReportsPage";
@@ -80,6 +81,7 @@ const AppRouter = () => {
             </Route>
             <Route path={AppRoutes.forbidden.url} element={<ForbiddenPage />} />
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Route>
     </Routes>

@@ -31,6 +31,10 @@ export const AppRoutes = {
     name: "Доступ запрещён",
     url: "/forbidden",
   },
+  notFound: {
+    name: "Страница не найдена",
+    url: "/not_found",
+  },
 };
 
 export const RolesMenu = {
