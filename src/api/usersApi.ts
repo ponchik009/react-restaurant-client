@@ -13,4 +13,16 @@ export class UsersApi {
       .get<IUser[]>("/user", { withCredentials: true })
       .then((response) => response.data);
   }
+
+  public async blockUser(id: number) {
+    return this.instance
+      .patch<IUser>(`/user/block/${id}`, { withCredentials: true })
+      .then((response) => response.data);
+  }
+
+  public async unblockUser(id: number) {
+    return this.instance
+      .patch<IUser>(`/user/unblock/${id}`, { withCredentials: true })
+      .then((response) => response.data);
+  }
 }

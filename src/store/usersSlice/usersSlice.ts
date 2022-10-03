@@ -27,6 +27,20 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   return usersApi.fetchUsers();
 });
 
+export const blockUser = createAsyncThunk(
+  "users/blockUser",
+  async (id: number) => {
+    return usersApi.blockUser(id);
+  }
+);
+
+export const unblockUser = createAsyncThunk(
+  "users/unblockUser",
+  async (id: number) => {
+    return usersApi.unblockUser(id);
+  }
+);
+
 export const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -42,9 +56,40 @@ export const usersSlice = createSlice({
         state.users = action.payload;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
-        console.log(action.error);
         state.fetchUsersError = "Произошла ошибка при загрузке пользователей";
         state.fetchUserStatus = LoadingStatuses.REJECTED;
+      })
+      .addCase(blockUser.pending, (state) => {
+        // state.fetchUserStatus = LoadingStatuses.PENDING;
+      })
+      .addCase(blockUser.fulfilled, (state, action) => {
+        state.users =
+          state.users?.map((user) =>
+            user.id === action.payload.id ? action.payload : user
+          ) || null;
+        // state.fetchUserStatus = LoadingStatuses.FULFILED;
+        // state.fetchUsersError = null;
+        // state.users = action.payload;
+      })
+      .addCase(blockUser.rejected, (state, action) => {
+        // state.fetchUsersError = "Произошла ошибка при загрузке пользователей";
+        // state.fetchUserStatus = LoadingStatuses.REJECTED;
+      })
+      .addCase(unblockUser.pending, (state) => {
+        // state.fetchUserStatus = LoadingStatuses.PENDING;
+      })
+      .addCase(unblockUser.fulfilled, (state, action) => {
+        state.users =
+          state.users?.map((user) =>
+            user.id === action.payload.id ? action.payload : user
+          ) || null;
+        // state.fetchUserStatus = LoadingStatuses.FULFILED;
+        // state.fetchUsersError = null;
+        // state.users = action.payload;
+      })
+      .addCase(unblockUser.rejected, (state, action) => {
+        // state.fetchUsersError = "Произошла ошибка при загрузке пользователей";
+        // state.fetchUserStatus = LoadingStatuses.REJECTED;
       });
   },
 });
