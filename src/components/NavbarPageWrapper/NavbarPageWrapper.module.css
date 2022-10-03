@@ -27,6 +27,7 @@
 .title {
   font-size: 32px;
   color: #dd8a0f;
+  width: 25vw;
 }
 
 .username {
@@ -60,12 +61,12 @@
   font-weight: 500;
   font-size: 24px;
 
-  transition: all 0.5s;
+  transition: all 0.2s;
 }
 
 .navitem:hover {
   transform: scale(1.1);
-  transition: all 0.5s;
+  transition: all 0.2s;
 }
 
 .active {
@@ -75,4 +76,5 @@
 
 .main {
   margin-top: 56px;
+  padding-bottom: 96px;
 }

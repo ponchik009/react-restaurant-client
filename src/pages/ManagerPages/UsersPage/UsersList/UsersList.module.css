@@ -1,0 +1,72 @@
+.tableTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tableTitleText {
+  color: #787878;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+
+  width: 20%;
+
+  text-align: left;
+}
+
+.tableTitleText:first-child {
+  width: 30%;
+}
+
+.tableBody {
+  margin-top: 26px;
+}
+
+.tableRow {
+  margin-top: 64px;
+}
+
+.tableRowContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.tableRow:first-child {
+  margin-top: 0;
+}
+
+.tableRowText {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+
+  width: 20%;
+
+  text-align: left;
+}
+
+.active {
+  color: #3da82c;
+}
+
+.blocked {
+  color: #c10a0a;
+}
+
+.tableRowText:first-child {
+  width: 30%;
+}
+
+.tableRowLine {
+  border: 1px solid #e0e0e0;
+  margin-top: 12px;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.icon:last-child {
+  margin-left: 36px;
+}

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AuthApi } from "./authApi";
+import { UsersApi } from "./usersApi";
 
 const instance = axios.create({
   baseURL: "/api",
@@ -7,3 +8,4 @@ const instance = axios.create({
 });
 
 export const authApi = new AuthApi(instance);
+export const usersApi = new UsersApi(instance);

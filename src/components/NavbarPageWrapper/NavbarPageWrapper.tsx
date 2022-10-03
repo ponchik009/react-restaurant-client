@@ -33,7 +33,12 @@ const NavbarPageWrapper = () => {
             <h2 className={styles.username}>{`${RolesNames[user!.role.name]} ${
               user?.name
             }`}</h2>
-            <Button title="Выйти" width="fit-content" onClick={onLogoutClick} />
+            <Button
+              title="Выйти"
+              width="fit-content"
+              onClick={onLogoutClick}
+              color="red"
+            />
           </div>
         </div>
         <nav className={styles.navbar}>

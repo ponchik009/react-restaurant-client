@@ -1,0 +1,46 @@
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalContent {
+  width: 40vw;
+}
+
+.modalHeader {
+  min-height: 68px;
+  background: #52ad0a;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.modalHeaderTitle {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  max-width: 60%;
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  cursor: pointer;
+}
+
+.modalBody {
+  background: #fff;
+  padding: 36px 64px 80px 64px;
+}

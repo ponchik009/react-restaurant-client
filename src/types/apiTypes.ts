@@ -5,6 +5,7 @@ export interface IUser {
   name: string;
   login: string;
   role: IRole;
+  deletedAt: null | Date;
 }
 
 export interface IRole {
