@@ -79,7 +79,7 @@ export const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
-        state.fetchUserStatus = LoadingStatuses.PENDING;
+        state.fetchUsersStatus = LoadingStatuses.PENDING;
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.fetchUsersStatus = LoadingStatuses.FULFILED;
