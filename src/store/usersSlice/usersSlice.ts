@@ -82,7 +82,7 @@ export const usersSlice = createSlice({
         state.fetchUserStatus = LoadingStatuses.PENDING;
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.fetchUserStatus = LoadingStatuses.FULFILED;
+        state.fetchUsersStatus = LoadingStatuses.FULFILED;
         state.fetchUsersError = null;
         state.users = action.payload;
       })
@@ -122,6 +122,9 @@ export const usersSlice = createSlice({
       .addCase(createUser.pending, (state, action) => {
         state.fetchUserStatus = LoadingStatuses.PENDING;
       })
+      .addCase(createUser.rejected, (state, action) => {
+        state.fetchUserStatus = LoadingStatuses.REJECTED;
+      })
       .addCase(createUser.fulfilled, (state, action) => {
         state.fetchUserError = LoadingStatuses.FULFILED;
         state.users?.push(action.payload);
@@ -129,8 +132,11 @@ export const usersSlice = createSlice({
       .addCase(updateUser.pending, (state, action) => {
         state.fetchUserStatus = LoadingStatuses.PENDING;
       })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.fetchUserStatus = LoadingStatuses.REJECTED;
+      })
       .addCase(updateUser.fulfilled, (state, action) => {
-        state.fetchUserError = LoadingStatuses.FULFILED;
+        state.fetchUserStatus = LoadingStatuses.FULFILED;
         state.users =
           state.users?.map((user) =>
             user.id === action.payload.id ? action.payload : user
