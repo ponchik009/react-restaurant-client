@@ -20,7 +20,7 @@ const initialState: UsersSlice = {
   currentUser: null,
   fetchUsersStatus: LoadingStatuses.PENDING,
   fetchUsersError: null,
-  fetchUserStatus: LoadingStatuses.PENDING,
+  fetchUserStatus: LoadingStatuses.FULFILED,
   fetchUserError: null,
   roles: null,
 };
