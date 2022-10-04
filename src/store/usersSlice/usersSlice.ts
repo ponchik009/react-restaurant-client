@@ -126,7 +126,7 @@ export const usersSlice = createSlice({
         state.fetchUserStatus = LoadingStatuses.REJECTED;
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        state.fetchUserError = LoadingStatuses.FULFILED;
+        state.fetchUserStatus = LoadingStatuses.FULFILED;
         state.users?.push(action.payload);
       })
       .addCase(updateUser.pending, (state, action) => {
