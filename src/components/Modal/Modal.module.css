@@ -24,6 +24,8 @@
   align-items: center;
 
   position: relative;
+
+  border-radius: 12px 12px 0 0;
 }
 
 .modalHeaderTitle {
@@ -44,4 +46,6 @@
 .modalBody {
   background: #fff;
   padding: 36px 64px 80px 64px;
+
+  border-radius: 0 0 12px 12px;
 }

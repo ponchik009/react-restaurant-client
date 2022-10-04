@@ -8,6 +8,25 @@ export interface IUser {
   deletedAt: null | Date;
 }
 
+export interface ICreateUser {
+  name: string;
+  login: string;
+  password: string;
+  roleId: number;
+}
+
+export interface IUpdateUser {
+  id: number;
+  name?: string;
+  login?: string;
+  password?: string;
+  role?: IRoleId;
+}
+
+export interface IRoleId {
+  id: number;
+}
+
 export interface IRole {
   id: number;
   name: Roles;

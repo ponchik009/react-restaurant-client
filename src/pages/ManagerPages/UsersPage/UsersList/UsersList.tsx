@@ -9,11 +9,13 @@ import { ReactComponent as IconAdd } from "../../../../assets/icons/IconAdd.svg"
 
 import styles from "./UsersList.module.css";
 import ModalConfirm from "../../../../components/ModalConfirm/ModalConfirm";
-import { useAppDispatch } from "../../../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/hooks";
+import { fetchUserById } from "../../../../store/usersSlice/usersSlice";
+import { LoadingStatuses } from "../../../../types/enums";
 
 interface IUsersListProps {
   data: IUser[];
-  onEditClick: () => void;
+  onEditClick: (id: number) => void;
   onBlockClick: (id: number) => void;
   onUnblockClick: (id: number) => void;
 }
@@ -25,12 +27,24 @@ const UsersList: React.FC<IUsersListProps> = ({
   onUnblockClick,
 }) => {
   const dispatch = useAppDispatch();
+  const { user: loggedInUser } = useAppSelector((state) => state.auth);
+  const { currentUser, fetchUserStatus } = useAppSelector(
+    (state) => state.users
+  );
 
   const [confirmModalOpen, setConfirmModalOpen] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState<IUser | null>(null);
+  const [confirmModalTitle, setConfirmModalTitle] = React.useState("");
+
+  React.useEffect(() => {
+    setConfirmModalTitle(
+      `Вы действительно хотите ${
+        currentUser?.deletedAt === null ? "заблокировать" : "разблокировать"
+      } пользователя ${currentUser?.name}?`
+    );
+  }, [currentUser]);
 
   const iconBlockClick = React.useCallback((user: IUser) => {
-    setCurrentUser(user);
+    dispatch(fetchUserById(user.id));
     setConfirmModalOpen(true);
   }, []);
 
@@ -72,18 +86,22 @@ const UsersList: React.FC<IUsersListProps> = ({
                     {user.deletedAt === null ? "Активен" : "Заблокирован"}
                   </span>
                   <span className={styles.tableRowText}>
-                    <IconEdit className={styles.icon} onClick={onEditClick} />
-                    {user.deletedAt === null ? (
-                      <IconCancel
-                        className={styles.icon}
-                        onClick={() => iconBlockClick(user)}
-                      />
-                    ) : (
-                      <IconAdd
-                        className={styles.icon}
-                        onClick={() => iconBlockClick(user)}
-                      />
-                    )}
+                    <IconEdit
+                      className={styles.icon}
+                      onClick={() => onEditClick(user.id)}
+                    />
+                    {loggedInUser?.id !== user.id &&
+                      (user.deletedAt === null ? (
+                        <IconCancel
+                          className={styles.icon}
+                          onClick={() => iconBlockClick(user)}
+                        />
+                      ) : (
+                        <IconAdd
+                          className={styles.icon}
+                          onClick={() => iconBlockClick(user)}
+                        />
+                      ))}
                   </span>
                 </div>
                 <hr className={styles.tableRowLine} />
@@ -92,10 +110,8 @@ const UsersList: React.FC<IUsersListProps> = ({
         </div>
       </div>
       <ModalConfirm
-        title={`Вы действительно хотите ${
-          currentUser?.deletedAt === null ? "заблокировать" : "разблокировать"
-        } пользователя ${currentUser?.name}?`}
-        open={confirmModalOpen}
+        title={confirmModalTitle}
+        open={confirmModalOpen && fetchUserStatus === LoadingStatuses.FULFILED}
         onClose={onCancelClick}
         onOkClick={onOkClick}
         onCancelClick={onCancelClick}

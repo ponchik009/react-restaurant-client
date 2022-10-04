@@ -12,6 +12,7 @@ interface IButtonProps {
   title: string;
   width?: ButtonWidth;
   color?: ButtonColor;
+  disabled?: boolean;
 }
 
 const Button: React.FC<IButtonProps> = ({
@@ -20,6 +21,7 @@ const Button: React.FC<IButtonProps> = ({
   onClick,
   width = "inherit",
   color = "green",
+  disabled = false,
 }) => {
   return (
     <button
@@ -30,6 +32,7 @@ const Button: React.FC<IButtonProps> = ({
         [styles.red]: color === "red",
         [styles.green]: color === "green",
       })}
+      disabled={disabled}
     >
       {title}
     </button>

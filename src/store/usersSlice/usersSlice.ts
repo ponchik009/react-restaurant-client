@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { usersApi } from "../../api/api";
 import { RootState, AppThunk } from "../../store/store";
-import { IUser } from "../../types/apiTypes";
+import { ICreateUser, IRole, IUpdateUser, IUser } from "../../types/apiTypes";
 import { LoadingStatuses } from "../../types/enums";
 
 export interface UsersSlice {
@@ -12,6 +12,7 @@ export interface UsersSlice {
   fetchUsersError: string | null;
   fetchUserStatus: LoadingStatuses;
   fetchUserError: string | null;
+  roles: IRole[] | null;
 }
 
 const initialState: UsersSlice = {
@@ -21,6 +22,7 @@ const initialState: UsersSlice = {
   fetchUsersError: null,
   fetchUserStatus: LoadingStatuses.PENDING,
   fetchUserError: null,
+  roles: null,
 };
 
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
@@ -41,10 +43,39 @@ export const unblockUser = createAsyncThunk(
   }
 );
 
+export const fetchUserById = createAsyncThunk(
+  "users/fetchUserById",
+  async (id: number) => {
+    return usersApi.getById(id);
+  }
+);
+
+export const fetchRoles = createAsyncThunk("users/fetchRoles", async () => {
+  return usersApi.getRoles();
+});
+
+export const createUser = createAsyncThunk(
+  "users/createUser",
+  async (user: ICreateUser) => {
+    return usersApi.createUser(user);
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "users/updateUser",
+  async (user: IUpdateUser) => {
+    return usersApi.updateUser(user);
+  }
+);
+
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    resetUser: (state) => {
+      state.currentUser = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -57,43 +88,57 @@ export const usersSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.fetchUsersError = "Произошла ошибка при загрузке пользователей";
-        state.fetchUserStatus = LoadingStatuses.REJECTED;
+        state.fetchUsersStatus = LoadingStatuses.REJECTED;
       })
-      .addCase(blockUser.pending, (state) => {
-        // state.fetchUserStatus = LoadingStatuses.PENDING;
-      })
+
       .addCase(blockUser.fulfilled, (state, action) => {
         state.users =
           state.users?.map((user) =>
             user.id === action.payload.id ? action.payload : user
           ) || null;
-        // state.fetchUserStatus = LoadingStatuses.FULFILED;
-        // state.fetchUsersError = null;
-        // state.users = action.payload;
       })
-      .addCase(blockUser.rejected, (state, action) => {
-        // state.fetchUsersError = "Произошла ошибка при загрузке пользователей";
-        // state.fetchUserStatus = LoadingStatuses.REJECTED;
-      })
-      .addCase(unblockUser.pending, (state) => {
-        // state.fetchUserStatus = LoadingStatuses.PENDING;
-      })
+
       .addCase(unblockUser.fulfilled, (state, action) => {
         state.users =
           state.users?.map((user) =>
             user.id === action.payload.id ? action.payload : user
           ) || null;
-        // state.fetchUserStatus = LoadingStatuses.FULFILED;
-        // state.fetchUsersError = null;
-        // state.users = action.payload;
       })
-      .addCase(unblockUser.rejected, (state, action) => {
-        // state.fetchUsersError = "Произошла ошибка при загрузке пользователей";
-        // state.fetchUserStatus = LoadingStatuses.REJECTED;
+      .addCase(fetchUserById.pending, (state, action) => {
+        state.fetchUserStatus = LoadingStatuses.PENDING;
+      })
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.fetchUserStatus = LoadingStatuses.FULFILED;
+        state.fetchUserError = null;
+        state.currentUser = action.payload;
+      })
+      .addCase(fetchUserById.rejected, (state, action) => {
+        state.fetchUserError = "Произошла ошибка при загрузке пользователя";
+        state.fetchUserStatus = LoadingStatuses.REJECTED;
+      })
+      .addCase(fetchRoles.fulfilled, (state, action) => {
+        state.roles = action.payload;
+      })
+      .addCase(createUser.pending, (state, action) => {
+        state.fetchUserStatus = LoadingStatuses.PENDING;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.fetchUserError = LoadingStatuses.FULFILED;
+        state.users?.push(action.payload);
+      })
+      .addCase(updateUser.pending, (state, action) => {
+        state.fetchUserStatus = LoadingStatuses.PENDING;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.fetchUserError = LoadingStatuses.FULFILED;
+        state.users =
+          state.users?.map((user) =>
+            user.id === action.payload.id ? action.payload : user
+          ) || null;
       });
   },
 });
 
-export const {} = usersSlice.actions;
+export const { resetUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

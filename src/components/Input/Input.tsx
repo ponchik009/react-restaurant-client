@@ -10,8 +10,9 @@ interface IInputProps {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   placeholder: string;
-  disabled: boolean;
+  disabled?: boolean;
   type?: React.HTMLInputTypeAttribute;
+  isError?: boolean;
 }
 
 const Input: React.FC<IInputProps> = React.memo(
@@ -22,26 +23,33 @@ const Input: React.FC<IInputProps> = React.memo(
     placeholder,
     disabled = false,
     type = "text",
+    isError = false,
   }) => {
     return (
       <>
         {rows === 1 ? (
           <input
             type={type}
-            className={classNames(styles.input)}
+            className={classNames(styles.input, {
+              [styles.error]: isError,
+            })}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
             disabled={disabled}
+            autoComplete="new-password"
           />
         ) : (
           <textarea
             rows={rows}
-            className={classNames(styles.input)}
+            className={classNames(styles.input, {
+              [styles.error]: isError,
+            })}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
             disabled={disabled}
+            autoComplete="new-password"
           />
         )}
       </>
