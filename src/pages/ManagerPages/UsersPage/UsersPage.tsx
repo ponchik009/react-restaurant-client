@@ -14,6 +14,7 @@ import {
 import styles from "./UsersPage.module.css";
 import UserModal from "./UserModal/UserModal";
 import { LoadingStatuses } from "../../../types/enums";
+import Badge from "../../../components/Badge/Badge";
 
 const UsersPage = () => {
   const dispatch = useAppDispatch();
@@ -65,6 +66,12 @@ const UsersPage = () => {
           isEdit={isEditMode}
         />
       )}
+      {/* <Badge
+        onClose={() => alert(123)}
+        open={true}
+        title="Успех!"
+        color="green"
+      /> */}
     </div>
   );
 };

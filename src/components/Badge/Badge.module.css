@@ -1,0 +1,46 @@
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade_out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.badge {
+  position: absolute;
+  height: 50px;
+  width: 150px;
+  bottom: 5%;
+  right: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+
+  font-size: 18px;
+  color: #fff;
+
+  animation: fade 2s ease forwards;
+}
+
+.badgeDelete {
+  animation: fade_out 2s ease forwards;
+}
+
+.green {
+  background: #52ad0a;
+}
+
+.red {
+  background: #bd2f2f;
+}
