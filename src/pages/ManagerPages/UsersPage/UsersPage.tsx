@@ -18,12 +18,23 @@ import Badge from "../../../components/Badge/Badge";
 
 const UsersPage = () => {
   const dispatch = useAppDispatch();
-  const { users, fetchAllUsersStatus, fetchOneUserStatus } = useAppSelector(
-    (state) => state.users
-  );
+  const {
+    users,
+    fetchAllUsersStatus,
+    fetchOneUserStatus,
+    fetchSaveUserStatus,
+  } = useAppSelector((state) => state.users);
 
   const [userModalOpen, setUserModalOpen] = React.useState(false);
   const [isEditMode, setIsEditMode] = React.useState(false);
+
+  const [openBadge, setOpenBadge] = React.useState(false);
+
+  React.useEffect(() => {
+    if (fetchSaveUserStatus === LoadingStatuses.FULFILED) {
+      setOpenBadge(true);
+    }
+  }, [fetchSaveUserStatus]);
 
   const onCreateClick = React.useCallback(() => {
     dispatch(resetUser());
@@ -66,12 +77,18 @@ const UsersPage = () => {
         onClose={() => setUserModalOpen(false)}
         isEdit={isEditMode}
       />
-      {/* <Badge
-        onClose={() => alert(123)}
-        open={true}
-        title="Успех!"
-        color="green"
-      /> */}
+      <Badge
+        onClose={() => setOpenBadge(false)}
+        open={openBadge}
+        title={
+          fetchSaveUserStatus === LoadingStatuses.FULFILED
+            ? "Успех!"
+            : "Что-то пошло не так..."
+        }
+        color={
+          fetchSaveUserStatus === LoadingStatuses.FULFILED ? "green" : "red"
+        }
+      />
     </div>
   );
 };

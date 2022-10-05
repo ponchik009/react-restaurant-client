@@ -2,6 +2,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Button from "../../../../components/Button/Button";
+import FormInput from "../../../../components/FormInput/FormInput";
 import Input from "../../../../components/Input/Input";
 import Modal from "../../../../components/Modal/Modal";
 import { RolesNames } from "../../../../const/conts";
@@ -102,25 +103,14 @@ const UserModal: React.FC<IUserModalProps> = ({
         onSubmit={handleSubmit(isEdit ? onUpdateClick : onCreateClick)}
         className={styles.form}
       >
-        <div className={styles.inputBlock}>
-          <div className={styles.title}>Ф.И.О.</div>
-          <Controller
-            control={control}
-            name="name"
-            rules={{ required: "Поле обязательно для заполнения" }}
-            render={({ field: { onChange, onBlur, value, name, ref } }) => (
-              <Input
-                placeholder="Введите ФИО"
-                onChange={onChange}
-                value={value}
-                isError={Boolean(errors.name)}
-              />
-            )}
-          />
-          {errors.name && (
-            <div className={styles.error}>{errors.name.message as string}</div>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          errors={errors}
+          name="name"
+          placeholder="Введите ФИО"
+          title="Ф.И.О."
+          rules={{ required: "Поле обязательно для заполнения" }}
+        />
         <div className={styles.inputBlock}>
           <div className={styles.title}>Должность</div>
           <Controller
@@ -143,83 +133,42 @@ const UserModal: React.FC<IUserModalProps> = ({
             <div className={styles.error}>{errors.role.message as string}</div>
           )}
         </div>
-        <div className={styles.inputBlock}>
-          <div className={styles.title}>Логин</div>
-          <Controller
-            control={control}
-            name="username"
-            rules={{ required: "Поле обязательно для заполнения" }}
-            render={({ field: { onChange, onBlur, value, name, ref } }) => (
-              <Input
-                placeholder="Введите логин"
-                onChange={onChange}
-                value={value}
-                isError={Boolean(errors.username)}
-              />
-            )}
-          />
-          {errors.username && (
-            <div className={styles.error}>
-              {errors.username.message as string}
-            </div>
-          )}
-        </div>
+        <FormInput
+          control={control}
+          errors={errors}
+          name="username"
+          placeholder="Введите логин"
+          title="Логин"
+          rules={{ required: "Поле обязательно для заполнения" }}
+        />
         <div className={styles.passwordBlock}>
-          <div className={styles.inputBlock}>
-            <div className={styles.title}>
-              {isEdit ? "Новый пароль" : "Пароль"}
-            </div>
-            <Controller
-              control={control}
-              name="password"
-              rules={{
-                required: isEdit ? false : "Поле обязательно для заполнения",
-              }}
-              render={({ field: { onChange, onBlur, value, name, ref } }) => (
-                <Input
-                  placeholder="Введите пароль"
-                  onChange={onChange}
-                  value={value}
-                  isError={Boolean(errors.password)}
-                  type="password"
-                />
-              )}
-            />
-            {errors.password && (
-              <div className={styles.error}>
-                {errors.password.message as string}
-              </div>
-            )}
-          </div>
-          <div className={styles.inputBlock}>
-            <div className={styles.title}>Подтверждение пароля</div>
-            <Controller
-              control={control}
-              name="confirmPassword"
-              rules={{
-                required: isEdit ? false : "Поле обязательно для заполнения",
-                validate: (val: string) => {
-                  if (watch("password") != val) {
-                    return "Пароли не совпадают";
-                  }
-                },
-              }}
-              render={({ field: { onChange, onBlur, value, name, ref } }) => (
-                <Input
-                  placeholder="Подтвердите пароль"
-                  onChange={onChange}
-                  value={value}
-                  isError={Boolean(errors.confirmPassword)}
-                  type="password"
-                />
-              )}
-            />
-            {errors.confirmPassword && (
-              <div className={styles.error}>
-                {errors.confirmPassword.message as string}
-              </div>
-            )}
-          </div>
+          <FormInput
+            control={control}
+            errors={errors}
+            name="password"
+            type="password"
+            placeholder="Введите пароль"
+            title={isEdit ? "Новый пароль" : "Пароль"}
+            rules={{
+              required: isEdit ? false : "Поле обязательно для заполнения",
+            }}
+          />
+          <FormInput
+            control={control}
+            errors={errors}
+            name="confirmPassword"
+            type="password"
+            placeholder="Подтвердите пароль"
+            title="Подтверждение пароля"
+            rules={{
+              required: isEdit ? false : "Поле обязательно для заполнения",
+              validate: (val: string) => {
+                if (watch("password") != val) {
+                  return "Пароли не совпадают";
+                }
+              },
+            }}
+          />
         </div>
         <Button
           title={isEdit ? "Сохранить" : "Создать"}

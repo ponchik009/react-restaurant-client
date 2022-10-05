@@ -9,17 +9,16 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { login } from "../../store/authSlice/authSlice";
 import { LoadingStatuses } from "../../types/enums";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import FormInput from "../../components/FormInput/FormInput";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const { authError, status, user } = useAppSelector((state) => state.auth);
 
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-
-  const onLogin = React.useCallback(() => {
-    dispatch(login({ login: username, password }));
-  }, [username, password]);
+  const onLogin = React.useCallback((data: any) => {
+    dispatch(login({ login: data.login, password: data.password }));
+  }, []);
 
   const navigate = useNavigate();
   React.useEffect(() => {
@@ -28,29 +27,40 @@ const LoginPage = () => {
     }
   }, [user]);
 
+  const {
+    handleSubmit,
+    reset,
+    control,
+    watch,
+    formState: { errors },
+    setValue,
+  } = useForm({});
+
   return (
     <div className={styles.loginPage}>
       <div>
         <IconDogGreen className={styles.icon} />
         <h2 className={styles.title}>Лучший корейский ресторан</h2>
       </div>
-      <div className={styles.inputs}>
-        <Input
-          disabled={false}
+      <form className={styles.inputs} onSubmit={handleSubmit(onLogin)}>
+        <FormInput
+          control={control}
+          errors={errors}
+          name="login"
           placeholder="Логин"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          rules={{ required: "Поле обязательно для заполнения" }}
         />
-        <Input
-          type="password"
-          disabled={false}
+        <FormInput
+          control={control}
+          errors={errors}
+          name="password"
           placeholder="Пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          rules={{ required: "Поле обязательно для заполнения" }}
+          type="password"
         />
-      </div>
-      {authError && authError}
-      <Button title="Войти" onClick={onLogin} />
+        {authError && <div className={styles.error}>{authError}</div>}
+        <Button title="Войти" onClick={() => {}} type="submit" />
+      </form>
     </div>
   );
 };
