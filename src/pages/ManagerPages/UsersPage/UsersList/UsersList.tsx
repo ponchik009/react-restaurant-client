@@ -28,7 +28,7 @@ const UsersList: React.FC<IUsersListProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { user: loggedInUser } = useAppSelector((state) => state.auth);
-  const { currentUser, fetchUserStatus } = useAppSelector(
+  const { currentUser, fetchOneUserStatus } = useAppSelector(
     (state) => state.users
   );
 
@@ -111,7 +111,9 @@ const UsersList: React.FC<IUsersListProps> = ({
       </div>
       <ModalConfirm
         title={confirmModalTitle}
-        open={confirmModalOpen && fetchUserStatus === LoadingStatuses.FULFILED}
+        open={
+          confirmModalOpen && fetchOneUserStatus === LoadingStatuses.FULFILED
+        }
         onClose={onCancelClick}
         onOkClick={onOkClick}
         onCancelClick={onCancelClick}

@@ -29,6 +29,7 @@ const Button: React.FC<IButtonProps> = ({
       onClick={onClick}
       className={classNames(styles.button, {
         [styles.widthMax]: width === "max",
+        [styles.widthFit]: width === "fit-content",
         [styles.red]: color === "red",
         [styles.green]: color === "green",
       })}

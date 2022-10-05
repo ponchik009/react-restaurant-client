@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { usePreloader } from "../../hooks/usePreloader";
 import { LoadingStatuses } from "../../types/enums";
 import Loader from "../Loader/Loader";
 import PageWrapper from "../PageWrapper/PageWrapper";
@@ -17,18 +18,7 @@ const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
   onFailRedirectPath,
   onSuccessRedirectPath,
 }) => {
-  const [isPreloaderShow, setIsPreloaderShow] = React.useState(false);
-  const timer = React.useRef<NodeJS.Timeout | null>(null);
-
-  React.useEffect(() => {
-    if (isLoading) {
-      timer.current && clearTimeout(timer.current);
-      timer.current = setTimeout(() => setIsPreloaderShow(true), 200);
-    } else {
-      timer.current && clearTimeout(timer.current);
-      setIsPreloaderShow(false);
-    }
-  }, [isLoading]);
+  const { isPreloaderShow } = usePreloader(isLoading);
 
   if (isLoading && !isPreloaderShow) return null;
 

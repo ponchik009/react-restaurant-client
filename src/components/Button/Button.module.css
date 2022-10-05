@@ -42,3 +42,7 @@
 .widthMax {
   width: 100%;
 }
+
+.widthFit {
+  width: fit-content;
+}

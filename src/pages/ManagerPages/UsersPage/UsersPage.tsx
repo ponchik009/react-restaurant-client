@@ -18,13 +18,15 @@ import Badge from "../../../components/Badge/Badge";
 
 const UsersPage = () => {
   const dispatch = useAppDispatch();
-  const { users, fetchUsersError, fetchUsersStatus, fetchUserStatus } =
-    useAppSelector((state) => state.users);
+  const { users, fetchAllUsersStatus, fetchOneUserStatus } = useAppSelector(
+    (state) => state.users
+  );
 
   const [userModalOpen, setUserModalOpen] = React.useState(false);
   const [isEditMode, setIsEditMode] = React.useState(false);
 
   const onCreateClick = React.useCallback(() => {
+    dispatch(resetUser());
     setIsEditMode(false);
     setUserModalOpen(true);
   }, []);
@@ -59,13 +61,11 @@ const UsersPage = () => {
         onUnblockClick={onUnblockUser}
         onEditClick={onEditUser}
       />
-      {userModalOpen && fetchUserStatus !== LoadingStatuses.PENDING && (
-        <UserModal
-          modalOpen={userModalOpen}
-          onClose={() => setUserModalOpen(false)}
-          isEdit={isEditMode}
-        />
-      )}
+      <UserModal
+        modalOpen={userModalOpen}
+        onClose={() => setUserModalOpen(false)}
+        isEdit={isEditMode}
+      />
       {/* <Badge
         onClose={() => alert(123)}
         open={true}

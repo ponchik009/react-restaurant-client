@@ -10,7 +10,7 @@ import {
   createUser,
   updateUser,
 } from "../../../../store/usersSlice/usersSlice";
-import { Roles } from "../../../../types/enums";
+import { LoadingStatuses, Roles } from "../../../../types/enums";
 
 import styles from "./UserModal.module.css";
 
@@ -31,27 +31,11 @@ const UserModal: React.FC<IUserModalProps> = ({
   isEdit = false,
 }) => {
   const dispatch = useAppDispatch();
-  const { currentUser, fetchUserStatus, roles } = useAppSelector(
+  const { currentUser, fetchOneUserStatus, roles } = useAppSelector(
     (state) => state.users
   );
 
-  const defaultValues = React.useMemo(
-    () => ({
-      username: isEdit ? currentUser!.login : "",
-      password: "",
-      confirmPassword: "",
-      name: isEdit ? currentUser!.name : "",
-      role: {
-        label: RolesNames[currentUser?.role.name || Roles.MANAGER],
-        value: currentUser?.role.id || 1,
-      },
-    }),
-    []
-  );
-
   const onCreateClick = React.useCallback((data: any) => {
-    console.log("create");
-    console.log(data);
     dispatch(
       createUser({
         login: data.username,
@@ -63,20 +47,21 @@ const UserModal: React.FC<IUserModalProps> = ({
     closeForm();
   }, []);
 
-  const onUpdateClick = React.useCallback((data: any) => {
-    console.log("update");
-    console.log(data);
-    dispatch(
-      updateUser({
-        id: currentUser!.id,
-        login: data.username,
-        name: data.name,
-        password: data.password,
-        role: { id: data.role.value },
-      })
-    );
-    closeForm();
-  }, []);
+  const onUpdateClick = React.useCallback(
+    (data: any) => {
+      dispatch(
+        updateUser({
+          id: currentUser!.id,
+          login: data.username,
+          name: data.name,
+          password: data.password,
+          role: { id: data.role.value },
+        })
+      );
+      closeForm();
+    },
+    [currentUser]
+  );
 
   const {
     handleSubmit,
@@ -84,9 +69,21 @@ const UserModal: React.FC<IUserModalProps> = ({
     control,
     watch,
     formState: { errors },
-  } = useForm({
-    defaultValues,
-  });
+    setValue,
+  } = useForm({});
+
+  React.useEffect(() => {
+    if (currentUser) {
+      setValue("username", currentUser.login);
+      setValue("name", currentUser.name);
+      setValue("role", {
+        label: RolesNames[currentUser.role.name],
+        value: currentUser.role.id,
+      });
+    } else {
+      reset();
+    }
+  }, [currentUser]);
 
   const closeForm = React.useCallback(() => {
     reset();
@@ -99,6 +96,7 @@ const UserModal: React.FC<IUserModalProps> = ({
       onClose={closeForm}
       title={isEdit ? "Редактировать пользователя" : "Создать пользователя"}
       headerColor="green"
+      isLoading={fetchOneUserStatus === LoadingStatuses.PENDING}
     >
       <form
         onSubmit={handleSubmit(isEdit ? onUpdateClick : onCreateClick)}
@@ -120,7 +118,7 @@ const UserModal: React.FC<IUserModalProps> = ({
             )}
           />
           {errors.name && (
-            <div className={styles.error}>{errors.name.message}</div>
+            <div className={styles.error}>{errors.name.message as string}</div>
           )}
         </div>
         <div className={styles.inputBlock}>
@@ -142,7 +140,7 @@ const UserModal: React.FC<IUserModalProps> = ({
             )}
           />
           {errors.role && (
-            <div className={styles.error}>{errors.role.message}</div>
+            <div className={styles.error}>{errors.role.message as string}</div>
           )}
         </div>
         <div className={styles.inputBlock}>
@@ -161,7 +159,9 @@ const UserModal: React.FC<IUserModalProps> = ({
             )}
           />
           {errors.username && (
-            <div className={styles.error}>{errors.username.message}</div>
+            <div className={styles.error}>
+              {errors.username.message as string}
+            </div>
           )}
         </div>
         <div className={styles.passwordBlock}>
@@ -186,7 +186,9 @@ const UserModal: React.FC<IUserModalProps> = ({
               )}
             />
             {errors.password && (
-              <div className={styles.error}>{errors.password.message}</div>
+              <div className={styles.error}>
+                {errors.password.message as string}
+              </div>
             )}
           </div>
           <div className={styles.inputBlock}>
@@ -214,7 +216,7 @@ const UserModal: React.FC<IUserModalProps> = ({
             />
             {errors.confirmPassword && (
               <div className={styles.error}>
-                {errors.confirmPassword.message}
+                {errors.confirmPassword.message as string}
               </div>
             )}
           </div>
