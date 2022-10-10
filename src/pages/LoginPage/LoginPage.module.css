@@ -7,6 +7,12 @@
   min-width: 20vw;
 }
 
+@media (min-width: 720px) {
+  .loginPage {
+    width: 30vw;
+  }
+}
+
 .title {
   font-size: 32px;
 }

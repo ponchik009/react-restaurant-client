@@ -9,6 +9,7 @@ export interface AuthState {
   user: IUser | null;
   status: LoadingStatuses;
   authError: string | null;
+  authErrorCount: number;
 }
 
 export interface ILoginParams {
@@ -20,6 +21,7 @@ const initialState: AuthState = {
   user: null,
   status: LoadingStatuses.PENDING,
   authError: null,
+  authErrorCount: 0,
 };
 
 export const login = createAsyncThunk(
@@ -53,8 +55,14 @@ export const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         console.log(action.error);
-        state.authError = "Неверные данные для входа!";
         state.status = LoadingStatuses.REJECTED;
+        state.authErrorCount += 1;
+        if (state.authErrorCount > 2) {
+          state.authError =
+            "Вы несколько раз подряд ввели неверные данные. Обратитесь к менеджеру или администратору для восстановления пароля";
+        } else {
+          state.authError = "Неверные данные для входа";
+        }
       })
       .addCase(fetchUser.pending, (state) => {
         state.status = LoadingStatuses.PENDING;
@@ -74,6 +82,7 @@ export const authSlice = createSlice({
         state.status = LoadingStatuses.FULFILED;
         state.authError = null;
         state.user = null;
+        state.authErrorCount = 0;
       })
       .addCase(logout.rejected, (state) => {
         state.status = LoadingStatuses.REJECTED;

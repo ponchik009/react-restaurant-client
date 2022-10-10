@@ -1,4 +1,4 @@
-import { Roles } from "../types/enums";
+import { DishTypes, Roles } from "../types/enums";
 
 export const RolesNames = {
   [Roles.KITCHEN]: "Кухня",
@@ -76,4 +76,12 @@ export const RolesMenu = {
       hide: false,
     },
   },
+};
+
+export const DishTypesNames = {
+  [DishTypes.DRINK]: "Напитки",
+  [DishTypes.HOTTER]: "Горячее",
+  [DishTypes.SALAD]: "Салаты",
+  [DishTypes.SNACK]: "Закуски",
+  [DishTypes.SOUP]: "Супы",
 };

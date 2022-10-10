@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Button from "../../../../components/Button/Button";
 import FormInput from "../../../../components/FormInput/FormInput";
+import FormSelect from "../../../../components/FormSelect/FormSelect";
 import Input from "../../../../components/Input/Input";
 import Modal from "../../../../components/Modal/Modal";
 import { RolesNames } from "../../../../const/conts";
@@ -19,11 +20,6 @@ interface IUserModalProps {
   modalOpen: boolean;
   onClose: () => void;
   isEdit: boolean;
-}
-
-interface IOption {
-  label: string;
-  value: string | number;
 }
 
 const UserModal: React.FC<IUserModalProps> = ({
@@ -111,28 +107,20 @@ const UserModal: React.FC<IUserModalProps> = ({
           title="Ф.И.О."
           rules={{ required: "Поле обязательно для заполнения" }}
         />
-        <div className={styles.inputBlock}>
-          <div className={styles.title}>Должность</div>
-          <Controller
-            control={control}
-            name="role"
-            rules={{ required: "Поле обязательно для заполнения" }}
-            render={({ field: { onChange, onBlur, value, name, ref } }) => (
-              <Select
-                onChange={onChange}
-                value={value}
-                options={roles?.map((role) => ({
-                  label: RolesNames[role.name],
-                  value: role.id,
-                }))}
-                placeholder="Выберите должность"
-              />
-            )}
-          />
-          {errors.role && (
-            <div className={styles.error}>{errors.role.message as string}</div>
-          )}
-        </div>
+        <FormSelect
+          options={
+            roles?.map((role) => ({
+              label: RolesNames[role.name],
+              value: role.id,
+            })) || []
+          }
+          control={control}
+          errors={errors}
+          name="role"
+          placeholder="Выберите должность"
+          title="Должность"
+          rules={{ required: "Поле обязательно для заполнения" }}
+        />
         <FormInput
           control={control}
           errors={errors}

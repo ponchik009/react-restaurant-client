@@ -13,7 +13,7 @@ export interface UsersSlice {
   fetchOneUserStatus: LoadingStatuses;
   fetchOneUserError: string | null;
   roles: IRole[] | null;
-  fetchSaveUserStatus: LoadingStatuses;
+  fetchSaveUserStatus: LoadingStatuses | null;
   fetchSaveUserError: string | null;
 }
 
@@ -25,7 +25,7 @@ const initialState: UsersSlice = {
   fetchOneUserStatus: LoadingStatuses.FULFILED,
   fetchOneUserError: null,
   roles: null,
-  fetchSaveUserStatus: LoadingStatuses.FULFILED,
+  fetchSaveUserStatus: null,
   fetchSaveUserError: null,
 };
 

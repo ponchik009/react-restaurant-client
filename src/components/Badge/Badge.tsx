@@ -27,7 +27,7 @@ const Badge: React.FC<IBadgeProps> = ({ open, onClose, title, color }) => {
       }
       timer.current = setTimeout(() => {
         setShows(false);
-        onClose();
+        setTimeout(onClose, 2000);
       }, 4000);
     }
   }, [open]);

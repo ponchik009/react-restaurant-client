@@ -1,4 +1,4 @@
-import { Roles } from "./enums";
+import { DishTypes, Roles } from "./enums";
 
 export interface IUser {
   id: number;
@@ -30,4 +30,19 @@ export interface IRoleId {
 export interface IRole {
   id: number;
   name: Roles;
+}
+
+export interface IDish {
+  id: number;
+  name: string;
+  description: string;
+  ingredients: string;
+  price: number;
+  cookingTime: number;
+  image: string;
+  weight: number;
+  calories: number;
+  isVegan: boolean;
+  isAlcoholic: boolean;
+  dishType: DishTypes;
 }

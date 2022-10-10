@@ -1,0 +1,80 @@
+.item {
+  background: #fafafa;
+  border-radius: 12px;
+  filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.25));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 32px 16px;
+  gap: 16px;
+
+  height: 336px;
+  width: 312px;
+
+  cursor: pointer;
+}
+
+.itemImage {
+  border-radius: 12px;
+  width: 284px;
+  height: 154px;
+}
+
+.dishInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  width: 100%;
+
+  text-align: center;
+}
+
+.ingredients {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  overflow-wrap: break-word;
+  max-height: 36px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dishNumbers {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  width: 100%;
+}
+
+.dishCharacteristics {
+  display: flex;
+  flex-direction: column;
+}
+
+.dishCharacteristics > span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: #dd8a0f;
+}
+
+.dishPrice {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: #000000;
+}

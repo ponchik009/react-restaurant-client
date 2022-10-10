@@ -31,7 +31,10 @@ const UsersPage = () => {
   const [openBadge, setOpenBadge] = React.useState(false);
 
   React.useEffect(() => {
-    if (fetchSaveUserStatus === LoadingStatuses.FULFILED) {
+    if (
+      fetchSaveUserStatus === LoadingStatuses.FULFILED ||
+      fetchSaveUserStatus === LoadingStatuses.REJECTED
+    ) {
       setOpenBadge(true);
     }
   }, [fetchSaveUserStatus]);

@@ -12,6 +12,14 @@
 
 .modalContent {
   width: 40vw;
+  height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modalContent::-webkit-scrollbar {
+  display: none;
 }
 
 .modalHeader {

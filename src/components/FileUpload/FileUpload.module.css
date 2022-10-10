@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+}
+
+.img {
+  width: 284px;
+  /* height: 154px; */
+  max-height: 200px;
+  border-radius: 12px;
+
+  cursor: pointer;
+}
+
+.hovered {
+  filter: brightness(60%);
+}
+
+.icon {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
+.invisible {
+  display: none;
+}

@@ -30,6 +30,8 @@
   font-size: 18px;
   color: #fff;
 
+  padding: 8px;
+
   animation: fade 2s ease forwards;
 }
 

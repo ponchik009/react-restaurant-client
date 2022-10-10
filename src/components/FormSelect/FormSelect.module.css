@@ -1,0 +1,18 @@
+.inputBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.error {
+  color: red;
+  margin-left: 4px;
+}
+
+.title {
+  margin-left: 4px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #52ad0a;
+}

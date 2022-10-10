@@ -1,5 +1,6 @@
 import axios from "axios";
 import { AuthApi } from "./authApi";
+import { MenuApi } from "./menuApi";
 import { UsersApi } from "./usersApi";
 
 const instance = axios.create({
@@ -9,3 +10,4 @@ const instance = axios.create({
 
 export const authApi = new AuthApi(instance);
 export const usersApi = new UsersApi(instance);
+export const menuApi = new MenuApi(instance);
