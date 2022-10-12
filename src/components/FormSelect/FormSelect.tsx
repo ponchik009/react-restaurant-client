@@ -41,6 +41,7 @@ const FormSelect: React.FC<IFormSelect> = ({
             value={value}
             options={options}
             placeholder={placeholder}
+            isSearchable={false}
           />
         )}
       />

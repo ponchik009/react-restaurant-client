@@ -58,16 +58,22 @@
 
 .dishCharacteristics {
   display: flex;
-  flex-direction: column;
+  align-items: flex-end;
+  /* flex-direction: column; */
 }
 
-.dishCharacteristics > span {
+.dishCharacteristics span {
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
 
   color: #dd8a0f;
+}
+
+.dishCiphers {
+  display: flex;
+  flex-direction: column;
 }
 
 .dishPrice {

@@ -37,6 +37,15 @@ const MenuItemModal: React.FC<IMenuItemModalProps> = ({
 
   const [picture, setPicture] = React.useState(null);
 
+  const options = React.useMemo(
+    () =>
+      Object.entries(DishTypesNames).map(([value, label]) => ({
+        value,
+        label,
+      })),
+    []
+  );
+
   const onCreateClick = React.useCallback(
     (data: any) => {
       const formData = new FormData();
@@ -141,10 +150,7 @@ const MenuItemModal: React.FC<IMenuItemModalProps> = ({
               placeholder="Выберите тип блюда"
               title="Тип блюда"
               rules={{ required: "Поле обязательно для заполнения" }}
-              options={Object.entries(DishTypesNames).map(([value, label]) => ({
-                value,
-                label,
-              }))}
+              options={options}
             />
             <div className={styles.checkboxes}>
               <FormCheckbox
@@ -185,8 +191,24 @@ const MenuItemModal: React.FC<IMenuItemModalProps> = ({
         <FormInput
           control={control}
           errors={errors}
+          name="price"
+          placeholder="Введите стоимость блюда (руб.)"
+          title="Стоимость блюда"
+          rules={{
+            required: "Поле обязательно для заполнения",
+            validate: (val: string) => {
+              if (+val < 1) {
+                return "Стоимость не может быть отрицательной";
+              }
+            },
+          }}
+          type="number"
+        />
+        <FormInput
+          control={control}
+          errors={errors}
           name="weight"
-          placeholder="Введите вес блюда"
+          placeholder="Введите вес блюда (гр.)"
           title="Вес блюда"
           rules={{
             required: "Поле обязательно для заполнения",
@@ -202,7 +224,7 @@ const MenuItemModal: React.FC<IMenuItemModalProps> = ({
           control={control}
           errors={errors}
           name="calories"
-          placeholder="Введите калорийность блюда"
+          placeholder="Введите калорийность блюда (ккал.)"
           title="Калорийность блюда"
           rules={{
             required: "Поле обязательно для заполнения",
@@ -217,24 +239,8 @@ const MenuItemModal: React.FC<IMenuItemModalProps> = ({
         <FormInput
           control={control}
           errors={errors}
-          name="price"
-          placeholder="Введите стоимость блюда"
-          title="Стоимость блюда"
-          rules={{
-            required: "Поле обязательно для заполнения",
-            validate: (val: string) => {
-              if (+val < 1) {
-                return "Стоимость не может быть отрицательной";
-              }
-            },
-          }}
-          type="number"
-        />
-        <FormInput
-          control={control}
-          errors={errors}
           name="cookingTime"
-          placeholder="Введите время готовки блюда"
+          placeholder="Введите время готовки блюда (мин.)"
           title="Время готовки блюда"
           rules={{
             required: "Поле обязательно для заполнения",

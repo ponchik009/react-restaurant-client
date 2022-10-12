@@ -1,0 +1,13 @@
+.userWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  height: 100%;
+}
+
+.username {
+  font-size: 32px;
+}

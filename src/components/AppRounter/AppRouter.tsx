@@ -8,7 +8,11 @@ import LoginPage from "../../pages/LoginPage/LoginPage";
 import MenuPage from "../../pages/ManagerPages/MenuPage/MenuPage";
 import ReportsPage from "../../pages/ManagerPages/ReportsPage/ReportsPage";
 import UsersPage from "../../pages/ManagerPages/UsersPage/UsersPage";
+import AddOrderPage from "../../pages/WaiterPages/AddOrderPage/AddOrderPage";
+import OrdersHistoryPage from "../../pages/WaiterPages/OrdersHistoryPage/OrdersHistoryPage";
 import OrdersPage from "../../pages/WaiterPages/OrdersPage/OrdersPage";
+import WaiterMenuPage from "../../pages/WaiterPages/WaiterMenuPage/WaiterMenuPage";
+import WaiterProfilePage from "../../pages/WaiterPages/WaiterProfilePage/WaiterProfilePage";
 import { fetchUser } from "../../store/authSlice/authSlice";
 import { LoadingStatuses, Roles } from "../../types/enums";
 import NavbarPageWrapper from "../NavbarPageWrapper/NavbarPageWrapper";
@@ -78,6 +82,10 @@ const AppRouter = () => {
               }
             >
               <Route path={AppRoutes.orders.url} element={<OrdersPage />} />
+              <Route path={AppRoutes.waiterMenu.url} element={<WaiterMenuPage />} />
+              <Route path={AppRoutes.addOrder.url} element={<AddOrderPage />} />
+              <Route path={AppRoutes.ordersHistory.url} element={<OrdersHistoryPage />} />
+              <Route path={AppRoutes.waiterProfile.url} element={<WaiterProfilePage />} />
             </Route>
             <Route path={AppRoutes.forbidden.url} element={<ForbiddenPage />} />
           </Route>

@@ -1,6 +1,9 @@
 import React from "react";
-import { DishTypesNames } from "../../const/conts";
 import { DishTypes } from "../../types/enums";
+import { DishTypesNames } from "../../const/conts";
+
+import { ReactComponent as IconVegan } from "../../assets/icons/IconVegan.svg";
+import { ReactComponent as IconVine } from "../../assets/icons/IconVine.svg";
 
 import styles from "./MenuItem.module.css";
 
@@ -10,6 +13,7 @@ interface IMenuItemProps {
   ingredients: string;
   weight: number;
   calories: number;
+  cookingTime: number;
   price: number;
   isAlcoholic?: boolean;
   isVegan?: boolean;
@@ -27,13 +31,14 @@ const MenuItem: React.FC<IMenuItemProps> = ({
   type,
   isAlcoholic = false,
   isVegan = false,
+  cookingTime,
   onClick,
 }) => {
   return (
     <div className={styles.item} onClick={onClick}>
       <div className={styles.dishInfo}>
         <img
-          src={`${process.env.REACT_APP_API_URL}${image}`}
+          src={`${process.env.REACT_APP_API_URL}/${image}`}
           alt={title}
           className={styles.itemImage}
         />
@@ -42,13 +47,24 @@ const MenuItem: React.FC<IMenuItemProps> = ({
       </div>
       <div className={styles.dishNumbers}>
         <div className={styles.dishCharacteristics}>
-          <span>
-            {weight} {type === DishTypes.DRINK ? "мл" : "гр"}.
-          </span>
-          <span>{calories} ккал.</span>
+          <div className={styles.dishCiphers}>
+            <span>
+              {weight} {type === DishTypes.DRINK ? "мл" : "гр"}.
+            </span>
+            <span>{calories} ккал.</span>
+            <span>{cookingTime} мин.</span>
+          </div>
+          {isAlcoholic && (
+            <span className={styles.dishPrice}>
+              <IconVine />
+            </span>
+          )}
+          {isVegan && (
+            <span className={styles.dishPrice}>
+              <IconVegan />
+            </span>
+          )}
         </div>
-        {isAlcoholic && <span className={styles.dishPrice}>алко</span>}
-        {isVegan && <span className={styles.dishPrice}>веган</span>}
         <span className={styles.dishPrice}>{price}р</span>
       </div>
     </div>

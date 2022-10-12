@@ -53,7 +53,12 @@ const NavbarPageWrapper = () => {
                     onClick={() => navigate(menuItem.url)}
                     key={menuItem.url}
                   >
-                    {menuItem.name}
+                    <span className={styles.menuItemText}>{menuItem.name}</span>
+                    {menuItem.icon && (
+                      <span className={styles.menuItemIcon}>
+                        {menuItem.icon}
+                      </span>
+                    )}
                   </li>
                 )
             )}
@@ -63,6 +68,13 @@ const NavbarPageWrapper = () => {
       <main className={styles.main}>
         <Outlet />
       </main>
+      <div className={styles.mobileAppbar}>
+        {
+          Object.values(RolesMenu[user!.role.name]).find(
+            (menuItem) => menuItem.url === location.pathname
+          ).name
+        }
+      </div>
     </div>
   );
 };

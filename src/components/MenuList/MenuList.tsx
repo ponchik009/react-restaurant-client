@@ -24,6 +24,7 @@ const MenuList: React.FC<IMenuProps> = React.memo(({ menu, onClick }) => {
               price={dish.price}
               title={dish.name}
               weight={dish.weight}
+              cookingTime={dish.cookingTime}
               isAlcoholic={dish.isAlcoholic}
               isVegan={dish.isVegan}
               type={dish.dishType}
