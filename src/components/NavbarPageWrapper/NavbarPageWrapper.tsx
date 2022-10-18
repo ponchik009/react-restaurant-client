@@ -30,6 +30,10 @@ const NavbarPageWrapper = () => {
       socket.emit("joinKitchen", user!.name);
       socket.on("joinedKitchen", (data: any) => console.log(data));
     }
+
+    if (user!.role.name === Roles.KITCHEN) {
+      socket.on("orderCreated", (data) => console.log(data));
+    }
   }, []);
 
   const currentRoute = React.useMemo(
@@ -65,8 +69,9 @@ const NavbarPageWrapper = () => {
         <nav className={styles.navbar}>
           <ul className={styles.navlist}>
             {Object.values(RolesMenu[user!.role.name]).map(
-              (menuItem) =>
-                !menuItem.hide && (
+              (menuItem, index, arr) =>
+                !menuItem.hide &&
+                arr.filter((i) => !i.hide).length > 1 && (
                   <li
                     className={classNames(styles.navitem, {
                       [styles.active]: menuItem.url === location.pathname,

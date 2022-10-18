@@ -21,7 +21,8 @@ export const createOrder = createAsyncThunk(
   "orders/createOrder",
   async (tableNumber: number, api) => {
     const { order } = (api.getState() as any).orders;
-    return orderApi.createOrder({ ...order, tableNumber });
+    const { user } = (api.getState() as any).auth;
+    return orderApi.createOrder({ ...order, tableNumber }, user);
   }
 );
 

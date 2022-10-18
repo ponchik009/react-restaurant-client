@@ -52,6 +52,8 @@ const DishPage = () => {
     dispatch(fetchDish(+id!));
   }, []);
 
+  if (!dish && !isPreloaderShow) return null;
+
   return (
     <>
       {isPreloaderShow ? (

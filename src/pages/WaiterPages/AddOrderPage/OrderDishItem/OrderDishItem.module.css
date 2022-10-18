@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  min-width: 80vw;
+  width: 80vw;
 
   position: relative;
 
@@ -43,8 +43,8 @@
 }
 
 .card img {
-  width: 40vw;
-  height: 20vw;
+  max-width: 35vw;
+  height: 100%;
   border-radius: 6px;
 }
 
@@ -55,6 +55,7 @@
   width: 60%;
   /* height: 100%; */
   gap: 8px;
+  padding-top: 24px;
 }
 
 .dishInfo {
@@ -65,9 +66,10 @@
 
 .dishMainInfo {
   display: flex;
+  row-gap: 16px;
+  column-gap: 8px;
   justify-content: space-between;
-
-  padding-right: 24px;
+  flex-wrap: wrap;
 }
 
 .dishMainInfo span {
@@ -81,7 +83,7 @@
 .dish h4 {
   font-style: normal;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .dishComment {
@@ -96,5 +98,5 @@
 .dishPrice {
   font-style: normal;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }

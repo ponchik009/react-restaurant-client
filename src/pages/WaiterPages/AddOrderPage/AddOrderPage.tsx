@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import {
   createOrder,
   removeDishFromOrder,
+  resetOrder,
   updateDishInOrder,
 } from "../../../store/orderSlice/ordersSlice";
 import { IOrderDish } from "../../../types/apiTypes";
@@ -27,6 +28,15 @@ const AddOrderPage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { order } = useAppSelector((state) => state.orders);
 
+  const totalPrice = React.useMemo(
+    () =>
+      order?.orderDishes.reduce(
+        (prev, cur) => prev + cur.count * cur.dish.price,
+        0
+      ),
+    [order]
+  );
+
   React.useEffect(() => {
     socket.on("orderCreated", (data) => console.log(data));
   }, []);
@@ -37,6 +47,7 @@ const AddOrderPage = () => {
   const onSendClick = React.useCallback((data: any) => {
     setChooseTableNumberModalOpen(false);
     dispatch(createOrder(data.tableNumber));
+    dispatch(resetOrder());
   }, []);
 
   const onChooseTableNumberModalClose = React.useCallback(
@@ -92,6 +103,7 @@ const AddOrderPage = () => {
         </div>
       ) : (
         <>
+          <h2>Общая стоимость: {totalPrice}</h2>
           <Order
             dishes={order.orderDishes}
             onDelete={onItemDelete}

@@ -19,6 +19,7 @@ import { LoadingStatuses, Roles } from "../../types/enums";
 import NavbarPageWrapper from "../NavbarPageWrapper/NavbarPageWrapper";
 import PageWrapper from "../PageWrapper/PageWrapper";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import KitchenOrdersPage from "../../pages/KitchenPages/KitchenOrdersPage/KitchenOrdersPage";
 
 const AppRouter = () => {
   const dispatch = useAppDispatch();
@@ -97,6 +98,20 @@ const AppRouter = () => {
                 element={<WaiterProfilePage />}
               />
               <Route path={AppRoutes.dish.url} element={<DishPage />} />
+            </Route>
+            <Route
+              element={
+                <ProtectedRoute
+                  isLoading={false}
+                  isSuccess={user?.role.name === Roles.KITCHEN}
+                  onFailRedirectPath={AppRoutes.forbidden.url}
+                />
+              }
+            >
+              <Route
+                path={AppRoutes.kitchenOrders.url}
+                element={<KitchenOrdersPage />}
+              />
             </Route>
             <Route path={AppRoutes.forbidden.url} element={<ForbiddenPage />} />
           </Route>

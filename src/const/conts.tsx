@@ -73,6 +73,12 @@ export const AppRoutes = {
     icon: null,
     withBack: true,
   },
+  kitchenOrders: {
+    name: "Активные заказы",
+    url: "/kitchenOrders",
+    icon: null,
+    withBack: false,
+  },
   forbidden: {
     name: "Доступ запрещён",
     url: "/forbidden",
@@ -90,11 +96,11 @@ export const AppRoutes = {
 export const RolesMenu = {
   [Roles.KITCHEN]: {
     main: {
-      ...AppRoutes.orders,
+      ...AppRoutes.kitchenOrders,
       hide: true,
     },
     orders: {
-      ...AppRoutes.orders,
+      ...AppRoutes.kitchenOrders,
       hide: false,
     },
   },

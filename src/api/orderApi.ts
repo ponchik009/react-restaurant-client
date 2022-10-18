@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance } from "axios";
 
-import { ICreateOrder, IOrder } from "../types/apiTypes";
+import { ICreateOrder, IOrder, IUser } from "../types/apiTypes";
 import { socket } from "./api";
 
 export class OrderApi {
@@ -16,7 +16,8 @@ export class OrderApi {
   //     .then((response) => response.data);
   // }
 
-  public async createOrder(order: ICreateOrder) {
-    socket.emit("createOrder", order);
+  public async createOrder(order: ICreateOrder, waiter: IUser) {
+    const response = socket.emit("createOrder", order, waiter);
+    if (!response.connected) throw new Error("Нет соеднения с сервером");
   }
 }
