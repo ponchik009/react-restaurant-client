@@ -1,0 +1,89 @@
+.dishWrapper {
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  width: 100%;
+}
+
+.dishData {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dishMainInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dishMainInfo span {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 21px;
+  /* identical to box height */
+
+  text-align: right;
+
+  color: #dd8a0f;
+}
+
+.dishName {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #000000;
+}
+
+h4 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height */
+
+  color: #000000;
+}
+
+p {
+  margin-top: 8px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  /* or 20px */
+
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.dishCharacteristics {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  /* flex-direction: column; */
+}
+
+.dishCharacteristics span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: #dd8a0f;
+}
+
+.dishCiphers {
+  display: flex;
+  flex-direction: column;
+}
+
+.dishIcons {
+  display: flex;
+  gap: 8px;
+}

@@ -7,14 +7,16 @@ import {
   fetchDish,
   fetchMenu,
   resetDish,
-} from "../../../store/manuSlice/menuSlice";
+} from "../../../store/menuSlice/menuSlice";
 
 import styles from "./MenuPage.module.css";
 import MenuItemModal from "../../../components/MenuItemModal/MenuItemModal";
+import Badge from "../../../components/Badge/Badge";
+import { LoadingStatuses } from "../../../types/enums";
 
 const MenuPage = () => {
   const dispatch = useAppDispatch();
-  const { menu } = useAppSelector((state) => state.menu);
+  const { menu, saveDishStatus } = useAppSelector((state) => state.menu);
 
   const [menuItemModalOpen, setMenuItemModalOpen] = React.useState(false);
   const [isEditMode, setIsEditMode] = React.useState(false);
@@ -39,6 +41,17 @@ const MenuPage = () => {
     dispatch(fetchMenu());
   }, []);
 
+  const [openBadge, setOpenBadge] = React.useState(false);
+
+  React.useEffect(() => {
+    if (
+      saveDishStatus === LoadingStatuses.FULFILED ||
+      saveDishStatus === LoadingStatuses.REJECTED
+    ) {
+      setOpenBadge(true);
+    }
+  }, [saveDishStatus]);
+
   return (
     <div className={styles.menuWrapper}>
       <Button
@@ -51,6 +64,16 @@ const MenuPage = () => {
         isEdit={isEditMode}
         modalOpen={menuItemModalOpen}
         onClose={closeModal}
+      />
+      <Badge
+        onClose={() => setOpenBadge(false)}
+        open={openBadge}
+        title={
+          saveDishStatus === LoadingStatuses.FULFILED
+            ? "Успех!"
+            : "Что-то пошло не так..."
+        }
+        color={saveDishStatus === LoadingStatuses.FULFILED ? "green" : "red"}
       />
     </div>
   );

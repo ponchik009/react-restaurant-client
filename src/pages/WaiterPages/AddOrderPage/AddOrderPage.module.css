@@ -1,0 +1,40 @@
+.addOrderPageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.addOrderBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  cursor: pointer;
+
+  max-width: 60vw;
+  border: 1px dashed black;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.addOrderBlock:hover {
+  /* filter: brightness(60%); */
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+  width: 96px;
+  height: 96px;
+}
+
+.plusIcon {
+  position: absolute;
+  left: 51px;
+  top: 40px;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}

@@ -1,10 +1,10 @@
 import { DishTypes, Roles } from "../types/enums";
 
-import {ReactComponent as IconOrders} from '../assets/icons/IconOrders.svg';
-import {ReactComponent as IconAddOrder} from '../assets/icons/IconAddOrder.svg';
-import {ReactComponent as IconMenu} from '../assets/icons/IconMenu.svg';
-import {ReactComponent as IconProfile} from '../assets/icons/IconProfile.svg';
-import {ReactComponent as IconOrdersHistory} from '../assets/icons/IconOrdersHistory.svg';
+import { ReactComponent as IconOrders } from "../assets/icons/IconOrders.svg";
+import { ReactComponent as IconAddOrder } from "../assets/icons/IconAddOrder.svg";
+import { ReactComponent as IconMenu } from "../assets/icons/IconMenu.svg";
+import { ReactComponent as IconProfile } from "../assets/icons/IconProfile.svg";
+import { ReactComponent as IconOrdersHistory } from "../assets/icons/IconOrdersHistory.svg";
 
 export const RolesNames = {
   [Roles.KITCHEN]: "Кухня",
@@ -16,57 +16,74 @@ export const AppRoutes = {
   login: {
     name: "Авторизация",
     url: "/login",
-    icon: null
+    icon: null,
+    withBack: false,
   },
   users: {
     name: "Пользователи",
     url: "/users",
-    icon: null
+    icon: null,
+    withBack: false,
   },
   menu: {
     name: "Меню",
     url: "/menu",
-    icon: null
+    icon: null,
+    withBack: false,
   },
   reports: {
     name: "Отчёты",
     url: "/reports",
-    icon: null
+    icon: null,
+    withBack: false,
   },
   orders: {
     name: "Заказы",
     url: "/orders",
-    icon: <IconOrders />
+    icon: <IconOrders />,
+    withBack: false,
   },
   waiterMenu: {
     name: "Меню",
     url: "/waiterMenu",
-    icon: <IconMenu />
+    icon: <IconMenu />,
+    withBack: false,
   },
   addOrder: {
     name: "Создать заказ",
     url: "/addOrder",
-    icon: <IconAddOrder />
+    icon: <IconAddOrder />,
+    withBack: false,
   },
   ordersHistory: {
     name: "История заказов",
     url: "/ordersHistory",
-    icon: <IconOrdersHistory />
+    icon: <IconOrdersHistory />,
+    withBack: false,
   },
   waiterProfile: {
     name: "Профиль",
     url: "/waiterProfile",
-    icon: <IconProfile />
+    icon: <IconProfile />,
+    withBack: false,
+  },
+  dish: {
+    name: "Блюдо Меню",
+    url: "/dish/:id",
+    icon: null,
+    withBack: true,
   },
   forbidden: {
     name: "Доступ запрещён",
     url: "/forbidden",
-    icon: null
+    icon: null,
+    withBack: false,
   },
   notFound: {
     name: "Страница не найдена",
     url: "/not_found",
-    icon: null
+    icon: null,
+    withBack: false,
   },
 };
 
@@ -123,6 +140,10 @@ export const RolesMenu = {
     waiterProfile: {
       ...AppRoutes.waiterProfile,
       hide: false,
+    },
+    dish: {
+      ...AppRoutes.dish,
+      hide: true,
     },
   },
 };

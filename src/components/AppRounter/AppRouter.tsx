@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AppRoutes, RolesMenu } from "../../const/conts";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import DishPage from "../../pages/WaiterPages/DishPage/DishPage";
 import ForbiddenPage from "../../pages/ErrorPages/ForbiddenPage/ForbiddenPage";
 import NotFoundPage from "../../pages/ErrorPages/NotFoundPage/NotFoundPage";
 import LoginPage from "../../pages/LoginPage/LoginPage";
@@ -82,10 +83,20 @@ const AppRouter = () => {
               }
             >
               <Route path={AppRoutes.orders.url} element={<OrdersPage />} />
-              <Route path={AppRoutes.waiterMenu.url} element={<WaiterMenuPage />} />
+              <Route
+                path={AppRoutes.waiterMenu.url}
+                element={<WaiterMenuPage />}
+              />
               <Route path={AppRoutes.addOrder.url} element={<AddOrderPage />} />
-              <Route path={AppRoutes.ordersHistory.url} element={<OrdersHistoryPage />} />
-              <Route path={AppRoutes.waiterProfile.url} element={<WaiterProfilePage />} />
+              <Route
+                path={AppRoutes.ordersHistory.url}
+                element={<OrdersHistoryPage />}
+              />
+              <Route
+                path={AppRoutes.waiterProfile.url}
+                element={<WaiterProfilePage />}
+              />
+              <Route path={AppRoutes.dish.url} element={<DishPage />} />
             </Route>
             <Route path={AppRoutes.forbidden.url} element={<ForbiddenPage />} />
           </Route>

@@ -39,6 +39,18 @@
   border: 2px solid #bd2f2f;
 }
 
+.orange {
+  border: 2px solid #ecbd78;
+}
+
+.orange:hover {
+  background: #ecbd78;
+}
+
+.orange:visited {
+  border: 2px solid #ecbd78;
+}
+
 .widthMax {
   width: 100%;
 }

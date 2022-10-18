@@ -2,7 +2,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { DishTypesNames } from "../../const/conts";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { createDish, updateDish } from "../../store/manuSlice/menuSlice";
+import { createDish, updateDish } from "../../store/menuSlice/menuSlice";
 import { LoadingStatuses } from "../../types/enums";
 import Button from "../Button/Button";
 import FileUpload from "../FileUpload/FileUpload";

@@ -1,14 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Select, { MultiValue, Options } from "react-select";
 import { IOption } from "../../../components/FormSelect/FormSelect";
 import MenuList from "../../../components/MenuList/MenuList";
 import { DishTypesNames } from "../../../const/conts";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { fetchMenu } from "../../../store/manuSlice/menuSlice";
+import { fetchMenu } from "../../../store/menuSlice/menuSlice";
 
 import styles from "./WaiterMenuPage.module.css";
 
 const WaiterMenuPage = () => {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
   const { menu } = useAppSelector((state) => state.menu);
 
@@ -29,6 +32,10 @@ const WaiterMenuPage = () => {
     dispatch(fetchMenu());
   }, []);
 
+  const onMenuItemClick = React.useCallback((id: number) => {
+    navigate(`/dish/${id}`);
+  }, []);
+
   return (
     <div>
       <div className={styles.pageHeader}>
@@ -41,7 +48,7 @@ const WaiterMenuPage = () => {
           isMulti={true}
         />
       </div>
-      <MenuList menu={menu} onClick={() => {}} />
+      <MenuList menu={menu} onClick={onMenuItemClick} />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { menuApi } from "../../api/api";
-import { RootState, AppThunk } from "../../store/store";
+import { RootState, AppThunk } from "../store";
 import { IDish } from "../../types/apiTypes";
 import { LoadingStatuses } from "../../types/enums";
 

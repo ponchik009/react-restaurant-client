@@ -1,4 +1,4 @@
-import { DishTypes, Roles } from "./enums";
+import { DishTypes, OrderDishStatuses, OrderStatuses, Roles } from "./enums";
 
 export interface IUser {
   id: number;
@@ -45,4 +45,27 @@ export interface IDish {
   isVegan: boolean;
   isAlcoholic: boolean;
   dishType: DishTypes;
+}
+
+export interface IOrderDish {
+  id: number;
+  orderDishStatus: OrderDishStatuses;
+  dish: IDish;
+  comment: string;
+  count: number;
+}
+
+export interface ICreateOrder {
+  tableNumber: number;
+  orderDishes: IOrderDish[];
+}
+
+export interface IOrder {
+  id: number;
+  date: Date;
+  totalPrice: number;
+  tableNumber: number;
+  status: OrderStatuses;
+  waiter: IUser;
+  orderDishes: IOrderDish[];
 }

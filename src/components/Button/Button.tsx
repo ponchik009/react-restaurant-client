@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./Button.module.css";
 
 export type ButtonWidth = "max" | "fit-content";
-export type ButtonColor = "red" | "green";
+export type ButtonColor = "red" | "green" | "orange";
 
 interface IButtonProps {
   onClick: () => void;
@@ -32,6 +32,7 @@ const Button: React.FC<IButtonProps> = ({
         [styles.widthFit]: width === "fit-content",
         [styles.red]: color === "red",
         [styles.green]: color === "green",
+        [styles.orange]: color === "orange",
       })}
       disabled={disabled}
     >

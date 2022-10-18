@@ -87,6 +87,14 @@
     line-height: 18px;
 
     color: #000000;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .mobileAppbar svg {
+    cursor: pointer;
   }
 
   .aboveNavbar {

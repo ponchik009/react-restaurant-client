@@ -1,6 +1,8 @@
 import axios from "axios";
+import { io } from "socket.io-client";
 import { AuthApi } from "./authApi";
 import { MenuApi } from "./menuApi";
+import { OrderApi } from "./orderApi";
 import { UsersApi } from "./usersApi";
 
 const instance = axios.create({
@@ -11,3 +13,6 @@ const instance = axios.create({
 export const authApi = new AuthApi(instance);
 export const usersApi = new UsersApi(instance);
 export const menuApi = new MenuApi(instance);
+export const orderApi = new OrderApi(instance);
+
+export const socket = io("ws://localhost:7778");

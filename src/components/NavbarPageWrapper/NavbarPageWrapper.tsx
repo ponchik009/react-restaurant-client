@@ -8,7 +8,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { logout } from "../../store/authSlice/authSlice";
 import Button from "../Button/Button";
 
+import { ReactComponent as IconBack } from "../../assets/icons/IconBack.svg";
+
 import styles from "./NavbarPageWrapper.module.css";
+import { Roles } from "../../types/enums";
+import { socket } from "../../api/api";
 
 const NavbarPageWrapper = () => {
   const location = useLocation();
@@ -20,6 +24,23 @@ const NavbarPageWrapper = () => {
   const onLogoutClick = React.useCallback(() => {
     dispatch(logout());
   }, []);
+
+  React.useEffect(() => {
+    if (user!.role.name !== Roles.MANAGER) {
+      socket.emit("joinKitchen", user!.name);
+      socket.on("joinedKitchen", (data: any) => console.log(data));
+    }
+  }, []);
+
+  const currentRoute = React.useMemo(
+    () =>
+      Object.values(RolesMenu[user!.role.name]).find(
+        (menuItem) =>
+          // костыль (пока не знаю как решить)
+          menuItem.url === location.pathname || menuItem.url === "/dish/:id"
+      ),
+    [location.pathname]
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -69,11 +90,8 @@ const NavbarPageWrapper = () => {
         <Outlet />
       </main>
       <div className={styles.mobileAppbar}>
-        {
-          Object.values(RolesMenu[user!.role.name]).find(
-            (menuItem) => menuItem.url === location.pathname
-          ).name
-        }
+        {currentRoute?.withBack && <IconBack onClick={() => navigate(-1)} />}
+        <span>{currentRoute?.name}</span>
       </div>
     </div>
   );

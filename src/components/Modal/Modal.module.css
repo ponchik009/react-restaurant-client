@@ -8,11 +8,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10000;
 }
 
 .modalContent {
-  width: 40vw;
-  height: 80vh;
+  min-width: 40vw;
+  max-height: 80vh;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -24,7 +25,7 @@
 
 .modalHeader {
   min-height: 68px;
-  padding: 16px 0;
+  padding: 36px 0;
   background: #52ad0a;
   color: #fff;
   display: flex;
@@ -47,6 +48,8 @@
   position: absolute;
   top: 12px;
   right: 12px;
+
+  stroke: #fff;
 
   cursor: pointer;
 }

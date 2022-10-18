@@ -14,7 +14,6 @@ const MenuList: React.FC<IMenuProps> = React.memo(({ menu, onClick }) => {
     <div className={styles.menuList}>
       {menu &&
         menu.map((dish) => {
-          console.log(dish);
           return (
             <MenuItem
               key={dish.id}
