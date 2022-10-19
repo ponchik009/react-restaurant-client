@@ -30,10 +30,6 @@ const NavbarPageWrapper = () => {
       socket.emit("joinKitchen", user!.name);
       socket.on("joinedKitchen", (data: any) => console.log(data));
     }
-
-    if (user!.role.name === Roles.KITCHEN) {
-      socket.on("orderCreated", (data) => console.log(data));
-    }
   }, []);
 
   const currentRoute = React.useMemo(

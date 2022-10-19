@@ -2,19 +2,26 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { orderApi } from "../../api/api";
 import { RootState, AppThunk } from "../store";
-import { ICreateOrder, IDish, IOrderDish } from "../../types/apiTypes";
+import { ICreateOrder, IDish, IOrder, IOrderDish } from "../../types/apiTypes";
 import { LoadingStatuses } from "../../types/enums";
 
 export interface OrdersState {
   order: ICreateOrder | null;
   saveOrderStatus: LoadingStatuses;
   saveOrderError: string | null;
+
+  orders: IOrder[] | null;
+  fetchOrdersStatus: LoadingStatuses;
+  fetchOrdersError: null | string;
 }
 
 const initialState: OrdersState = {
   order: null,
   saveOrderError: null,
   saveOrderStatus: LoadingStatuses.FULFILED,
+  orders: null,
+  fetchOrdersStatus: LoadingStatuses.FULFILED,
+  fetchOrdersError: null,
 };
 
 export const createOrder = createAsyncThunk(
@@ -23,6 +30,13 @@ export const createOrder = createAsyncThunk(
     const { order } = (api.getState() as any).orders;
     const { user } = (api.getState() as any).auth;
     return orderApi.createOrder({ ...order, tableNumber }, user);
+  }
+);
+
+export const fetchOrdersForKitchen = createAsyncThunk(
+  "orders/fetchOrdersForKitchen",
+  async () => {
+    return orderApi.getOrdersForKitchen();
   }
 );
 
@@ -54,6 +68,9 @@ export const ordersSlice = createSlice({
     resetOrder(state) {
       state.order = null;
     },
+    addOrder(state, action: PayloadAction<IOrder>) {
+      state.orders?.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -67,6 +84,18 @@ export const ordersSlice = createSlice({
       .addCase(createOrder.rejected, (state, action) => {
         console.log(action.error);
         state.saveOrderStatus = LoadingStatuses.REJECTED;
+      })
+      .addCase(fetchOrdersForKitchen.pending, (state) => {
+        state.fetchOrdersStatus = LoadingStatuses.PENDING;
+      })
+      .addCase(fetchOrdersForKitchen.fulfilled, (state, action) => {
+        state.fetchOrdersStatus = LoadingStatuses.FULFILED;
+        state.fetchOrdersError = null;
+        state.orders = action.payload;
+      })
+      .addCase(fetchOrdersForKitchen.rejected, (state, action) => {
+        state.fetchOrdersError = "Не удалось получить список заказов";
+        state.fetchOrdersStatus = LoadingStatuses.REJECTED;
       });
   },
 });
@@ -76,6 +105,7 @@ export const {
   resetOrder,
   removeDishFromOrder,
   updateDishInOrder,
+  addOrder,
 } = ordersSlice.actions;
 
 export default ordersSlice.reducer;
