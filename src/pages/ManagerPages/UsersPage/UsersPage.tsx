@@ -14,7 +14,7 @@ import {
 import styles from "./UsersPage.module.css";
 import UserModal from "./UserModal/UserModal";
 import { LoadingStatuses } from "../../../types/enums";
-import Badge from "../../../components/Badge/Badge";
+import Badge from "../../../components/Alert/Alert";
 
 const UsersPage = () => {
   const dispatch = useAppDispatch();

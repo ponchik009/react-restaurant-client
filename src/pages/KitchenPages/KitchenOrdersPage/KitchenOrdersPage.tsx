@@ -6,6 +6,7 @@ import { usePreloader } from "../../../hooks/usePreloader";
 import {
   addOrder,
   fetchOrdersForKitchen,
+  updateStatus,
 } from "../../../store/orderSlice/ordersSlice";
 import { IOrder } from "../../../types/apiTypes";
 import { LoadingStatuses } from "../../../types/enums";
@@ -22,6 +23,8 @@ const KitchenOrdersPage = () => {
     dispatch(fetchOrdersForKitchen());
 
     socket.on("orderCreated", (order: IOrder) => dispatch(addOrder(order)));
+    socket.on("startedCooking", (data) => dispatch(updateStatus(data)));
+    socket.on("endedCooking", (data) => dispatch(updateStatus(data)));
   }, []);
 
   const { isPreloaderShow } = usePreloader(

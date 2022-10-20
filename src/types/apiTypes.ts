@@ -53,6 +53,7 @@ export interface IOrderDish {
   dish: IDish;
   comment: string;
   count: number;
+  order: IOrder;
 }
 
 export interface ICreateOrder {

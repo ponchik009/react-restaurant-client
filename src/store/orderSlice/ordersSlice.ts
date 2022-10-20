@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import { orderApi } from "../../api/api";
 import { RootState, AppThunk } from "../store";
 import { ICreateOrder, IDish, IOrder, IOrderDish } from "../../types/apiTypes";
-import { LoadingStatuses } from "../../types/enums";
+import { LoadingStatuses, OrderStatuses } from "../../types/enums";
 
 export interface OrdersState {
   order: ICreateOrder | null;
@@ -71,6 +71,25 @@ export const ordersSlice = createSlice({
     addOrder(state, action: PayloadAction<IOrder>) {
       state.orders?.push(action.payload);
     },
+    updateStatus(state, action: PayloadAction<IOrderDish>) {
+      console.log(action.payload);
+      state.orders!.forEach((order) => {
+        if (order.id === action.payload.order.id) {
+          order.status = action.payload.order.status;
+          order.orderDishes.forEach((d) => {
+            if (d.id === action.payload.id) {
+              d.orderDishStatus = action.payload.orderDishStatus;
+            }
+          });
+        }
+      });
+
+      state.orders = state.orders!.filter(
+        (order) =>
+          order.status === OrderStatuses.SENT ||
+          order.status === OrderStatuses.COOKING
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -106,6 +125,7 @@ export const {
   removeDishFromOrder,
   updateDishInOrder,
   addOrder,
+  updateStatus,
 } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

@@ -6,6 +6,7 @@ import { ReactComponent as IconVegan } from "../../assets/icons/IconVegan.svg";
 import { ReactComponent as IconVine } from "../../assets/icons/IconVine.svg";
 
 import styles from "./MenuItem.module.css";
+import Chip from "../Chip/Chip";
 
 interface IMenuItemProps {
   image: string;
@@ -42,7 +43,10 @@ const MenuItem: React.FC<IMenuItemProps> = ({
           alt={title}
           className={styles.itemImage}
         />
-        <h4 className={styles.title}>{title}</h4>
+        <div className={styles.mainRow}>
+          <h4 className={styles.title}>{title}</h4>
+          <Chip title={DishTypesNames[type]} />
+        </div>
         <p className={styles.ingredients}>{ingredients}</p>
       </div>
       <div className={styles.dishNumbers}>

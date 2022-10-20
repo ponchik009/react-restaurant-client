@@ -1,0 +1,38 @@
+.chip {
+  border-radius: 24px;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+}
+
+.green {
+  border: 1px solid #52ad0a;
+  color: #52ad0a;
+}
+
+.red {
+  border: 1px solid #bd2f2f;
+  color: #bd2f2f;
+}
+
+.yellow {
+  border: 1px solid #dd8a0f;
+  color: #dd8a0f;
+}
+
+.xs {
+  /* width: 32px; */
+  height: 24px;
+}
+
+.md {
+  /* width: 64px; */
+  height: 32px;
+}
+
+.xl {
+  /* width: 96px; */
+  height: 64px;
+}

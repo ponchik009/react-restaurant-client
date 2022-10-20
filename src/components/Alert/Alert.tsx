@@ -4,18 +4,18 @@ import ReactDOM from "react-dom";
 
 import { ReactComponent as IconClose } from "../../assets/icons/IconClose.svg";
 
-import styles from "./Badge.module.css";
+import styles from "./Alert.module.css";
 
-export type BadgeColor = "red" | "green";
+export type AlertColor = "red" | "green";
 
-interface IBadgeProps {
+interface IAlertProps {
   open: boolean;
   onClose: () => void;
   title: string;
-  color?: BadgeColor;
+  color?: AlertColor;
 }
 
-const Badge: React.FC<IBadgeProps> = ({ open, onClose, title, color }) => {
+const Alert: React.FC<IAlertProps> = ({ open, onClose, title, color }) => {
   const timer = React.useRef<NodeJS.Timeout | null>(null);
   const [shows, setShows] = React.useState(true);
 
@@ -36,10 +36,10 @@ const Badge: React.FC<IBadgeProps> = ({ open, onClose, title, color }) => {
     <>
       {open && (
         <div
-          className={classNames(styles.badge, {
+          className={classNames(styles.alert, {
             [styles.red]: color === "red",
             [styles.green]: color === "green",
-            [styles.badgeDelete]: !shows,
+            [styles.alertDelete]: !shows,
           })}
           onClick={onClose}
         >
@@ -51,4 +51,4 @@ const Badge: React.FC<IBadgeProps> = ({ open, onClose, title, color }) => {
   );
 };
 
-export default Badge;
+export default Alert;

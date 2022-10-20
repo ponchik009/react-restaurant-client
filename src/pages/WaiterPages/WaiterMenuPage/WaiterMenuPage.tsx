@@ -39,7 +39,6 @@ const WaiterMenuPage = () => {
   return (
     <div>
       <div className={styles.pageHeader}>
-        {/* <h2>Меню</h2> */}
         <Select
           onChange={handleDishTypesChange}
           value={dishTypes}

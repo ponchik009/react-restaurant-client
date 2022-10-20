@@ -1,4 +1,9 @@
-import { DishTypes, Roles } from "../types/enums";
+import {
+  DishTypes,
+  OrderDishStatuses,
+  OrderStatuses,
+  Roles,
+} from "../types/enums";
 
 import { ReactComponent as IconOrders } from "../assets/icons/IconOrders.svg";
 import { ReactComponent as IconAddOrder } from "../assets/icons/IconAddOrder.svg";
@@ -160,4 +165,27 @@ export const DishTypesNames = {
   [DishTypes.SALAD]: "Салаты",
   [DishTypes.SNACK]: "Закуски",
   [DishTypes.SOUP]: "Супы",
+};
+
+export const DishStatusesNames = {
+  [OrderDishStatuses.SENT]: {
+    name: "В ожидании",
+    color: "red",
+  },
+  [OrderDishStatuses.COOKING]: {
+    name: "Готовится",
+    color: "yellow",
+  },
+  [OrderDishStatuses.READY]: {
+    name: "Готово",
+    color: "green",
+  },
+  [OrderDishStatuses.DELIVERED]: {
+    name: "Доставлено",
+    color: "green",
+  },
+  [OrderDishStatuses.CANCELED]: {
+    name: "Отменено",
+    color: "red",
+  },
 };

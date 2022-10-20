@@ -1,0 +1,57 @@
+.dish {
+  height: 120px;
+  /* max-width: 356px; */
+  /* width: 312px; */
+
+  display: flex;
+  align-items: center;
+  /* gap: 8px; */
+
+  border: 1px solid black;
+  border-radius: 12px;
+  /* overflow: hidden; */
+
+  cursor: pointer;
+}
+
+.image {
+  height: 100%;
+  /* width: 100%; */
+
+  border-radius: 12px;
+}
+
+.dishInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 8px;
+  /* width: 100%; */
+
+  max-width: 164px;
+}
+
+.dishInfo h4 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.dishAdditionalInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dishAdditionalInfo > span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  color: rgba(0, 0, 0, 0.5);
+}

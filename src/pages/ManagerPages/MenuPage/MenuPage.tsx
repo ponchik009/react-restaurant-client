@@ -11,7 +11,7 @@ import {
 
 import styles from "./MenuPage.module.css";
 import MenuItemModal from "../../../components/MenuItemModal/MenuItemModal";
-import Badge from "../../../components/Badge/Badge";
+import Badge from "../../../components/Alert/Alert";
 import { LoadingStatuses } from "../../../types/enums";
 
 const MenuPage = () => {

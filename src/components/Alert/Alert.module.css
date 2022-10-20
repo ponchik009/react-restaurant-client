@@ -16,7 +16,7 @@
   }
 }
 
-.badge {
+.alert {
   position: absolute;
   height: 50px;
   width: 150px;
@@ -35,7 +35,7 @@
   animation: fade 2s ease forwards;
 }
 
-.badgeDelete {
+.aadgeDelete {
   animation: fade_out 2s ease forwards;
 }
 
