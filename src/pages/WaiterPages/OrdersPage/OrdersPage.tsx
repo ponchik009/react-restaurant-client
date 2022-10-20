@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { fetchOrdersByWaiter } from "../../../store/orderSlice/ordersSlice";
-import KitchenOrdersList from "../../KitchenPages/KitchenOrdersPage/KitchenOrdersList/KitchenOrdersList";
+import OrdersList from "../../../components/OrdersList/OrdersList";
 
 const OrdersPage = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +15,7 @@ const OrdersPage = () => {
 
   return (
     <div>
-      <KitchenOrdersList orders={orders} />
+      <OrdersList orders={orders} />
     </div>
   );
 };

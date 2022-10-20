@@ -67,6 +67,7 @@ export interface IOrder {
   totalPrice: number;
   tableNumber: number;
   status: OrderStatuses;
+  isPaid: boolean;
   waiter: IUser;
   orderDishes: IOrderDish[];
 }

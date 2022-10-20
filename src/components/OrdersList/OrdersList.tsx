@@ -1,23 +1,22 @@
 import React from "react";
-import { socket } from "../../../../api/api";
-import { RolesNames } from "../../../../const/conts";
-import { useAppSelector } from "../../../../hooks/hooks";
-import { IOrder, IOrderDish } from "../../../../types/apiTypes";
-import { OrderDishStatuses, Roles } from "../../../../types/enums";
+import { socket } from "../../api/api";
+import { RolesNames } from "../../const/conts";
+import { useAppSelector } from "../../hooks/hooks";
+import { IOrder, IOrderDish } from "../../types/apiTypes";
+import { OrderDishStatuses, Roles } from "../../types/enums";
 import OrderDishModal from "../OrderDishModal/OrderDishModal";
 import OrderItem from "../OrderItem/OrderItem";
 
-import styles from "./KitchenOrdersList.module.css";
+import styles from "./OrdersList.module.css";
 
-interface IKitchenOrdersList {
+interface IOrdersList {
   orders: IOrder[] | null;
 }
 
-const KitchenOrdersList: React.FC<IKitchenOrdersList> = ({ orders }) => {
+const OrdersList: React.FC<IOrdersList> = ({ orders }) => {
   const { user } = useAppSelector((state) => state.auth);
 
   const [currentDish, setCurrentDish] = React.useState<null | IOrderDish>(null);
-  const [canDishClick, setCanDishClick] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const onDishClick = React.useCallback((dish: IOrderDish) => {
@@ -89,7 +88,12 @@ const KitchenOrdersList: React.FC<IKitchenOrdersList> = ({ orders }) => {
       <div className={styles.list}>
         {orders &&
           orders.map((order) => (
-            <OrderItem key={order.id} order={order} onDishClick={onDishClick} />
+            <OrderItem
+              key={order.id}
+              order={order}
+              onDishClick={onDishClick}
+              isWaiter={user!.role.name === Roles.WAITER}
+            />
           ))}
       </div>
       <OrderDishModal
@@ -102,4 +106,4 @@ const KitchenOrdersList: React.FC<IKitchenOrdersList> = ({ orders }) => {
   );
 };
 
-export default KitchenOrdersList;
+export default OrdersList;

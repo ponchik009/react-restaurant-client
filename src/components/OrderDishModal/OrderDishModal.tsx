@@ -1,8 +1,8 @@
 import React from "react";
-import Button from "../../../../components/Button/Button";
-import Modal from "../../../../components/Modal/Modal";
-import { IOrderDish } from "../../../../types/apiTypes";
-import { OrderDishStatuses } from "../../../../types/enums";
+import Button from "../Button/Button";
+import Modal from "../Modal/Modal";
+import { IOrderDish } from "../../types/apiTypes";
+import { OrderDishStatuses } from "../../types/enums";
 
 import styles from "./OrderDishModal.module.css";
 

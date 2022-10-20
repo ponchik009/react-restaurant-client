@@ -10,7 +10,7 @@ import {
 } from "../../../store/orderSlice/ordersSlice";
 import { IOrder } from "../../../types/apiTypes";
 import { LoadingStatuses, OrderStatuses } from "../../../types/enums";
-import KitchenOrdersList from "./KitchenOrdersList/KitchenOrdersList";
+import OrdersList from "../../../components/OrdersList/OrdersList";
 
 const KitchenOrdersPage = () => {
   const dispatch = useAppDispatch();
@@ -56,7 +56,7 @@ const KitchenOrdersPage = () => {
         </div>
       ) : (
         <>
-          <KitchenOrdersList orders={kitchenOrders} />
+          <OrdersList orders={kitchenOrders} />
         </>
       )}
     </>

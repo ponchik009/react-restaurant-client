@@ -1,8 +1,8 @@
 import React from "react";
-import { socket } from "../../../../api/api";
-import Chip, { ChipColors } from "../../../../components/Chip/Chip";
-import { DishStatusesNames } from "../../../../const/conts";
-import { IOrderDish } from "../../../../types/apiTypes";
+import { socket } from "../../api/api";
+import Chip, { ChipColors } from "../Chip/Chip";
+import { DishStatusesNames } from "../../const/conts";
+import { IOrderDish } from "../../types/apiTypes";
 
 import styles from "./OrderItemDish.module.css";
 

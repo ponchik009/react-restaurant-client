@@ -1,28 +1,33 @@
 import React from "react";
 
 import OrderItemDish from "../OrderItemDish/OrderItemDish";
-import Chip from "../../../../components/Chip/Chip";
+import Chip from "../Chip/Chip";
 
-import { IOrder, IOrderDish } from "../../../../types/apiTypes";
-import { OrderDishStatuses } from "../../../../types/enums";
+import { IOrder, IOrderDish } from "../../types/apiTypes";
+import { OrderDishStatuses } from "../../types/enums";
 
 import styles from "./OrderItem.module.css";
 
-import { ReactComponent as IconAlarm } from "../../../../assets/icons/IconAlarm.svg";
+import { ReactComponent as IconAlarm } from "../../assets/icons/IconAlarm.svg";
 
 interface IOrderItemProps {
   order: IOrder;
+  isWaiter?: boolean;
   onDishClick: (dish: IOrderDish) => void;
 }
 
-const OrderItem: React.FC<IOrderItemProps> = ({ order, onDishClick }) => {
+const OrderItem: React.FC<IOrderItemProps> = ({
+  order,
+  onDishClick,
+  isWaiter = false,
+}) => {
   const elapsedTime = React.useMemo(() => {
     const mins = Math.floor(
       (Date.now() - (new Date(order.date) as any)) / 1000 / 60
     );
     return mins >= 60
-      ? `${Math.floor(mins / 60)} час ${mins % 60} мин назад`
-      : `${mins} мин назад`;
+      ? `${Math.floor(mins / 60)} час. ${mins % 60} мин. назад`
+      : `${mins} мин. назад`;
   }, [order]);
 
   const deliveredDishes = React.useMemo(
@@ -60,9 +65,17 @@ const OrderItem: React.FC<IOrderItemProps> = ({ order, onDishClick }) => {
         <div className={styles.mainInfo}>
           <div className={styles.mainRow}>
             <h3 className={styles.title}>Заказ №{order.id}</h3>
-            {readyDishes > 0 && (
+            {readyDishes > 0 && isWaiter && (
               <Chip
                 title="Есть блюда, которые можно доставить"
+                color="yellow"
+                size="xs"
+                icon={<IconAlarm />}
+              />
+            )}
+            {sendedDishes > 0 && !isWaiter && (
+              <Chip
+                title="Есть блюда, которые нужно приготовить"
                 color="yellow"
                 size="xs"
                 icon={<IconAlarm />}
@@ -72,11 +85,18 @@ const OrderItem: React.FC<IOrderItemProps> = ({ order, onDishClick }) => {
           <span className={styles.time}>{elapsedTime}</span>
           <span className={styles.time}>Стол {order.tableNumber}</span>
         </div>
-        <div className={styles.statuses}>
-          <span className={styles.ready}>Доставлено: {deliveredDishes}</span>
-          <span className={styles.ready}>Готово: {readyDishes}</span>
-          <span className={styles.cooking}>Готовится: {cookingDihes}</span>
-          <span className={styles.sent}>Ожидает: {sendedDishes}</span>
+        <div className={styles.additionalInfo}>
+          <div className={styles.statuses}>
+            <span className={styles.ready}>Доставлено: {deliveredDishes}</span>
+            <span className={styles.ready}>Готово: {readyDishes}</span>
+            <span className={styles.cooking}>Готовится: {cookingDihes}</span>
+            <span className={styles.sent}>Ожидает: {sendedDishes}</span>
+          </div>
+          {isWaiter && (
+            <div className={styles.totalInfo}>
+              <span>Общая сумма: {order.totalPrice}р</span>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.dishes}>

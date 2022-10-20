@@ -15,7 +15,6 @@ export enum OrderStatuses {
   COOKING = "cooking",
   READY = "ready",
   DELIVERED = "delivered",
-  PAID = "paid",
   CANCELED = "canceled",
 }
 

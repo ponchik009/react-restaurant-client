@@ -31,6 +31,7 @@
 }
 
 .title {
+  /* white-space: nowrap; */
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -44,12 +45,23 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.additionalInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .statuses {
   display: flex;
   flex-direction: column;
   gap: 4px;
 
   width: fit-content;
+  white-space: nowrap;
+}
+
+.totalInfo {
+  text-align: right;
 }
 
 .ready {
