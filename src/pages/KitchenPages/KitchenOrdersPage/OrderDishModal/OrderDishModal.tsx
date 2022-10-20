@@ -19,6 +19,19 @@ const OrderDishModal: React.FC<IOrderDishModalProps> = ({
   onClose,
   onOkClick,
 }) => {
+  const dishTitle = React.useMemo(() => {
+    switch (orderDish?.orderDishStatus) {
+      case OrderDishStatuses.SENT:
+        return "Готовить";
+      case OrderDishStatuses.COOKING:
+        return "Готово";
+      case OrderDishStatuses.READY:
+        return "Доставлено";
+      default:
+        return "Ожидание...";
+    }
+  }, [orderDish]);
+
   return (
     <Modal
       headerColor="green"
@@ -34,14 +47,7 @@ const OrderDishModal: React.FC<IOrderDishModalProps> = ({
           />
           <span>Количество: {orderDish.count}</span>
           <span>Комментарий: {orderDish.comment}</span>
-          <Button
-            title={
-              orderDish.orderDishStatus === OrderDishStatuses.SENT
-                ? "Готовить"
-                : "Готово"
-            }
-            onClick={onOkClick}
-          />
+          <Button title={dishTitle} onClick={onOkClick} />
         </div>
       )}
     </Modal>

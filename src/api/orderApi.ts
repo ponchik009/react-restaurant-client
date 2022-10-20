@@ -20,4 +20,10 @@ export class OrderApi {
       .get<IOrder[]>("/order/for_kitchen", { withCredentials: true })
       .then((response) => response.data);
   }
+
+  public async getOrdersByWaiter() {
+    return this.instance
+      .get<IOrder[]>("/order/by_waiter", { withCredentials: true })
+      .then((response) => response.data);
+  }
 }

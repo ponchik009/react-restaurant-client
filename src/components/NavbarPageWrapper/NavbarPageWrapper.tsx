@@ -13,6 +13,8 @@ import { ReactComponent as IconBack } from "../../assets/icons/IconBack.svg";
 import styles from "./NavbarPageWrapper.module.css";
 import { Roles } from "../../types/enums";
 import { socket } from "../../api/api";
+import { addOrder, updateStatus } from "../../store/orderSlice/ordersSlice";
+import { IOrder, IOrderDish } from "../../types/apiTypes";
 
 const NavbarPageWrapper = () => {
   const location = useLocation();
@@ -29,6 +31,45 @@ const NavbarPageWrapper = () => {
     if (user!.role.name !== Roles.MANAGER) {
       socket.emit("joinKitchen", user!.name);
       socket.on("joinedKitchen", (data: any) => console.log(data));
+    }
+
+    if (user!.role.name === Roles.KITCHEN) {
+      socket.on("orderCreated", (order: IOrder) => dispatch(addOrder(order)));
+      socket.on("startedCooking", (dishOrder: IOrderDish) =>
+        dispatch(updateStatus(dishOrder))
+      );
+      socket.on("endedCooking", (dishOrder: IOrderDish) =>
+        dispatch(updateStatus(dishOrder))
+      );
+      socket.on("deliveredDish", (dishOrder: IOrderDish) =>
+        dispatch(updateStatus(dishOrder))
+      );
+    }
+
+    if (user!.role.name === Roles.WAITER) {
+      socket.on(
+        "orderCreated",
+        (order: IOrder) =>
+          order.waiter.id === user!.id && dispatch(addOrder(order))
+      );
+      socket.on(
+        "startedCooking",
+        (dishOrder: IOrderDish) =>
+          dishOrder.order.waiter.id === user!.id &&
+          dispatch(updateStatus(dishOrder))
+      );
+      socket.on(
+        "endedCooking",
+        (dishOrder: IOrderDish) =>
+          dishOrder.order.waiter.id === user!.id &&
+          dispatch(updateStatus(dishOrder))
+      );
+      socket.on(
+        "deliveredDish",
+        (dishOrder: IOrderDish) =>
+          dishOrder.order.waiter.id === user!.id &&
+          dispatch(updateStatus(dishOrder))
+      );
     }
   }, []);
 
@@ -51,9 +92,7 @@ const NavbarPageWrapper = () => {
             <h2 className={styles.title}>Лучший корейский ресторан</h2>
           </div>
           <div className={styles.userWrapper}>
-            <h2 className={styles.username}>{`${RolesNames[user!.role.name]} ${
-              user?.name
-            }`}</h2>
+            <h2 className={styles.username}>{`${user?.name}`}</h2>
             <Button
               title="Выйти"
               width="fit-content"

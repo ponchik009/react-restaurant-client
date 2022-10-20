@@ -1,7 +1,9 @@
 import React from "react";
 import { socket } from "../../../../api/api";
+import { RolesNames } from "../../../../const/conts";
+import { useAppSelector } from "../../../../hooks/hooks";
 import { IOrder, IOrderDish } from "../../../../types/apiTypes";
-import { OrderDishStatuses } from "../../../../types/enums";
+import { OrderDishStatuses, Roles } from "../../../../types/enums";
 import OrderDishModal from "../OrderDishModal/OrderDishModal";
 import OrderItem from "../OrderItem/OrderItem";
 
@@ -12,12 +14,23 @@ interface IKitchenOrdersList {
 }
 
 const KitchenOrdersList: React.FC<IKitchenOrdersList> = ({ orders }) => {
+  const { user } = useAppSelector((state) => state.auth);
+
   const [currentDish, setCurrentDish] = React.useState<null | IOrderDish>(null);
+  const [canDishClick, setCanDishClick] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const onDishClick = React.useCallback((dish: IOrderDish) => {
     setCurrentDish(dish);
-    setModalOpen(true);
+    if (
+      (user!.role.name === Roles.KITCHEN &&
+        (dish.orderDishStatus === OrderDishStatuses.SENT ||
+          dish.orderDishStatus === OrderDishStatuses.COOKING)) ||
+      (user!.role.name === Roles.WAITER &&
+        dish.orderDishStatus === OrderDishStatuses.READY)
+    ) {
+      setModalOpen(true);
+    }
   }, []);
 
   const onStartCookingClick = React.useCallback(() => {
@@ -39,10 +52,37 @@ const KitchenOrdersList: React.FC<IKitchenOrdersList> = ({ orders }) => {
     modalClose();
   }, [currentDish]);
 
+  const onDeliverDishClick = React.useCallback(() => {
+    if (
+      currentDish &&
+      currentDish.orderDishStatus === OrderDishStatuses.READY
+    ) {
+      socket.emit("deliverDish", currentDish.id);
+    }
+
+    modalClose();
+  }, [currentDish]);
+
   const modalClose = React.useCallback(() => {
     setCurrentDish(null);
     setModalOpen(false);
   }, []);
+
+  const onOkClick = React.useMemo(() => {
+    if (user!.role.name === Roles.KITCHEN) {
+      if (currentDish?.orderDishStatus === OrderDishStatuses.SENT) {
+        return onStartCookingClick;
+      } else if (currentDish?.orderDishStatus === OrderDishStatuses.COOKING) {
+        return onEndCookingClick;
+      }
+    } else if (user!.role.name === Roles.WAITER) {
+      if (currentDish?.orderDishStatus === OrderDishStatuses.READY) {
+        return onDeliverDishClick;
+      }
+    }
+
+    return () => {};
+  }, [user, currentDish]);
 
   return (
     <>
@@ -56,11 +96,7 @@ const KitchenOrdersList: React.FC<IKitchenOrdersList> = ({ orders }) => {
         open={modalOpen}
         orderDish={currentDish}
         onClose={modalClose}
-        onOkClick={
-          currentDish?.orderDishStatus === OrderDishStatuses.SENT
-            ? onStartCookingClick
-            : onEndCookingClick
-        }
+        onOkClick={onOkClick}
       />
     </>
   );

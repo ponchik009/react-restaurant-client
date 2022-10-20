@@ -1,9 +1,14 @@
 import React from "react";
+
+import OrderItemDish from "../OrderItemDish/OrderItemDish";
+import Chip from "../../../../components/Chip/Chip";
+
 import { IOrder, IOrderDish } from "../../../../types/apiTypes";
 import { OrderDishStatuses } from "../../../../types/enums";
-import OrderItemDish from "../OrderItemDish/OrderItemDish";
 
 import styles from "./OrderItem.module.css";
+
+import { ReactComponent as IconAlarm } from "../../../../assets/icons/IconAlarm.svg";
 
 interface IOrderItemProps {
   order: IOrder;
@@ -20,6 +25,13 @@ const OrderItem: React.FC<IOrderItemProps> = ({ order, onDishClick }) => {
       : `${mins} мин назад`;
   }, [order]);
 
+  const deliveredDishes = React.useMemo(
+    () =>
+      order.orderDishes.filter(
+        (dish) => dish.orderDishStatus === OrderDishStatuses.DELIVERED
+      ).length,
+    [order]
+  );
   const readyDishes = React.useMemo(
     () =>
       order.orderDishes.filter(
@@ -46,17 +58,25 @@ const OrderItem: React.FC<IOrderItemProps> = ({ order, onDishClick }) => {
     <div className={styles.item}>
       <div className={styles.info}>
         <div className={styles.mainInfo}>
-          <h3 className={styles.title}>Заказ №{order.id}</h3>
+          <div className={styles.mainRow}>
+            <h3 className={styles.title}>Заказ №{order.id}</h3>
+            {readyDishes > 0 && (
+              <Chip
+                title="Есть блюда, которые можно доставить"
+                color="yellow"
+                size="xs"
+                icon={<IconAlarm />}
+              />
+            )}
+          </div>
           <span className={styles.time}>{elapsedTime}</span>
+          <span className={styles.time}>Стол {order.tableNumber}</span>
         </div>
         <div className={styles.statuses}>
-          <span className={styles.ready}>Готовых блюд: {readyDishes}</span>
-          <span className={styles.cooking}>
-            Готовящихся блюд: {cookingDihes}
-          </span>
-          <span className={styles.sent}>
-            Блюд, ожидающих готовки: {sendedDishes}
-          </span>
+          <span className={styles.ready}>Доставлено: {deliveredDishes}</span>
+          <span className={styles.ready}>Готово: {readyDishes}</span>
+          <span className={styles.cooking}>Готовится: {cookingDihes}</span>
+          <span className={styles.sent}>Ожидает: {sendedDishes}</span>
         </div>
       </div>
       <div className={styles.dishes}>

@@ -40,6 +40,13 @@ export const fetchOrdersForKitchen = createAsyncThunk(
   }
 );
 
+export const fetchOrdersByWaiter = createAsyncThunk(
+  "orders/fetchOrdersByWaiter",
+  async () => {
+    return orderApi.getOrdersByWaiter();
+  }
+);
+
 export const ordersSlice = createSlice({
   name: "orders",
   initialState,
@@ -83,12 +90,6 @@ export const ordersSlice = createSlice({
           });
         }
       });
-
-      state.orders = state.orders!.filter(
-        (order) =>
-          order.status === OrderStatuses.SENT ||
-          order.status === OrderStatuses.COOKING
-      );
     },
   },
   extraReducers: (builder) => {
@@ -113,6 +114,18 @@ export const ordersSlice = createSlice({
         state.orders = action.payload;
       })
       .addCase(fetchOrdersForKitchen.rejected, (state, action) => {
+        state.fetchOrdersError = "Не удалось получить список заказов";
+        state.fetchOrdersStatus = LoadingStatuses.REJECTED;
+      })
+      .addCase(fetchOrdersByWaiter.pending, (state) => {
+        state.fetchOrdersStatus = LoadingStatuses.PENDING;
+      })
+      .addCase(fetchOrdersByWaiter.fulfilled, (state, action) => {
+        state.fetchOrdersStatus = LoadingStatuses.FULFILED;
+        state.fetchOrdersError = null;
+        state.orders = action.payload;
+      })
+      .addCase(fetchOrdersByWaiter.rejected, (state, action) => {
         state.fetchOrdersError = "Не удалось получить список заказов";
         state.fetchOrdersStatus = LoadingStatuses.REJECTED;
       });

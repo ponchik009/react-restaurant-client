@@ -16,9 +16,7 @@ const WaiterProfilePage = () => {
 
   return (
     <div className={styles.userWrapper}>
-      <h2 className={styles.username}>{`${RolesNames[user!.role.name]} ${
-        user?.name
-      }`}</h2>
+      <h2 className={styles.username}>{`${user?.name}`}</h2>
       <Button
         title="Выйти"
         width="fit-content"

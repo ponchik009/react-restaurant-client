@@ -15,13 +15,19 @@
   flex-direction: column;
   gap: 12px;
   /* width: 512px; */
-  /* width: 100%; */
+  /* width: 156px; */
 }
 
 .mainInfo {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.mainRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
@@ -42,6 +48,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  width: fit-content;
 }
 
 .ready {
@@ -61,4 +69,11 @@
   align-items: center;
   gap: 12px;
   overflow-x: auto;
+}
+
+@media screen and (max-width: 720px) {
+  .item {
+    display: flex;
+    flex-direction: column;
+  }
 }

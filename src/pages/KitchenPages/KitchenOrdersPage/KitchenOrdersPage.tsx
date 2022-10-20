@@ -9,7 +9,7 @@ import {
   updateStatus,
 } from "../../../store/orderSlice/ordersSlice";
 import { IOrder } from "../../../types/apiTypes";
-import { LoadingStatuses } from "../../../types/enums";
+import { LoadingStatuses, OrderStatuses } from "../../../types/enums";
 import KitchenOrdersList from "./KitchenOrdersList/KitchenOrdersList";
 
 const KitchenOrdersPage = () => {
@@ -19,12 +19,21 @@ const KitchenOrdersPage = () => {
     (state) => state.orders
   );
 
+  const kitchenOrders = React.useMemo(
+    () =>
+      orders
+        ? orders.filter(
+            (order) =>
+              order.status === OrderStatuses.SENT ||
+              order.status === OrderStatuses.COOKING ||
+              order.status === OrderStatuses.READY
+          )
+        : null,
+    [orders]
+  );
+
   React.useEffect(() => {
     dispatch(fetchOrdersForKitchen());
-
-    socket.on("orderCreated", (order: IOrder) => dispatch(addOrder(order)));
-    socket.on("startedCooking", (data) => dispatch(updateStatus(data)));
-    socket.on("endedCooking", (data) => dispatch(updateStatus(data)));
   }, []);
 
   const { isPreloaderShow } = usePreloader(
@@ -47,7 +56,7 @@ const KitchenOrdersPage = () => {
         </div>
       ) : (
         <>
-          <KitchenOrdersList orders={orders} />
+          <KitchenOrdersList orders={kitchenOrders} />
         </>
       )}
     </>
