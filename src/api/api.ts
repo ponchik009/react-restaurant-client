@@ -17,7 +17,7 @@ export const usersApi = new UsersApi(instance);
 export const menuApi = new MenuApi(instance);
 export const orderApi = new OrderApi(instance);
 
-export const socket = io("ws://localhost:7778", {
+export const socket = io(process.env.REACT_APP_SOCKET_URL || "localhost:7778", {
   withCredentials: true,
   transports: ["websocket", "polling", "flashsocket"],
 });

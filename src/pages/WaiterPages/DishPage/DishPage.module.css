@@ -7,6 +7,11 @@
   width: 100%;
 }
 
+.dishWrapper img {
+  max-height: 40vh;
+  border-radius: 12px;
+}
+
 .dishData {
   padding: 0 16px;
   display: flex;

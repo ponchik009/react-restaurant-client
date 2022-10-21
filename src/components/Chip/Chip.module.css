@@ -29,9 +29,14 @@
 }
 
 .xs {
-  /* width: 32px; */
+  max-width: 156px;
   /* height: 24px; */
   font-size: 13px;
+}
+
+.xs svg {
+  height: 24px;
+  width: 24px;
 }
 
 .md {
@@ -40,8 +45,18 @@
   font-size: 15px;
 }
 
+.md svg {
+  height: 30px;
+  width: 30px;
+}
+
 .xl {
   /* width: 96px; */
   /* height: 64px; */
   font-size: 17px;
+}
+
+.xl svg {
+  height: 36px;
+  width: 36px;
 }
