@@ -1,16 +1,14 @@
 import React from "react";
-import { socket } from "../../../api/api";
+
 import Loader from "../../../components/Loader/Loader";
+import OrdersList from "../../../components/OrdersList/OrdersList";
+
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { usePreloader } from "../../../hooks/usePreloader";
-import {
-  addOrder,
-  fetchOrdersForKitchen,
-  updateStatus,
-} from "../../../store/orderSlice/ordersSlice";
-import { IOrder } from "../../../types/apiTypes";
+
+import { fetchOrdersForKitchen } from "../../../store/orderSlice/ordersSlice";
+
 import { LoadingStatuses, OrderStatuses } from "../../../types/enums";
-import OrdersList from "../../../components/OrdersList/OrdersList";
 
 const KitchenOrdersPage = () => {
   const dispatch = useAppDispatch();

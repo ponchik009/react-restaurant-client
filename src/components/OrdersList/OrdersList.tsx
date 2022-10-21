@@ -6,6 +6,7 @@ import { IOrder, IOrderDish } from "../../types/apiTypes";
 import { OrderDishStatuses, Roles } from "../../types/enums";
 import OrderDishModal from "../OrderDishModal/OrderDishModal";
 import OrderItem from "../OrderItem/OrderItem";
+import OrderModal from "../OrderModal/OrderModal";
 
 import styles from "./OrdersList.module.css";
 
@@ -30,6 +31,11 @@ const OrdersList: React.FC<IOrdersList> = ({ orders }) => {
     ) {
       setModalOpen(true);
     }
+  }, []);
+
+  const modalClose = React.useCallback(() => {
+    setCurrentDish(null);
+    setModalOpen(false);
   }, []);
 
   const onStartCookingClick = React.useCallback(() => {
@@ -62,11 +68,6 @@ const OrdersList: React.FC<IOrdersList> = ({ orders }) => {
     modalClose();
   }, [currentDish]);
 
-  const modalClose = React.useCallback(() => {
-    setCurrentDish(null);
-    setModalOpen(false);
-  }, []);
-
   const onOkClick = React.useMemo(() => {
     if (user!.role.name === Roles.KITCHEN) {
       if (currentDish?.orderDishStatus === OrderDishStatuses.SENT) {
@@ -83,6 +84,33 @@ const OrdersList: React.FC<IOrdersList> = ({ orders }) => {
     return () => {};
   }, [user, currentDish]);
 
+  const [currentOrder, setCurrentOrder] = React.useState<null | IOrder>(null);
+  const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
+
+  const onOrderClick = React.useMemo(() => {
+    if (user!.role.name === Roles.WAITER) {
+      return (order: IOrder) => {
+        setCurrentOrder(order);
+        setModalOrderOpen(true);
+      };
+    }
+
+    return () => {};
+  }, []);
+
+  const modalOrderClose = React.useCallback(() => {
+    setCurrentOrder(null);
+    setModalOrderOpen(false);
+  }, []);
+
+  const onPayClick = React.useCallback(() => {
+    if (user!.role.name === Roles.WAITER && currentOrder) {
+      socket.emit("payOrder", currentOrder.id);
+    }
+
+    modalOrderClose();
+  }, [user, currentOrder]);
+
   return (
     <>
       <div className={styles.list}>
@@ -92,6 +120,7 @@ const OrdersList: React.FC<IOrdersList> = ({ orders }) => {
               key={order.id}
               order={order}
               onDishClick={onDishClick}
+              onClick={onOrderClick}
               isWaiter={user!.role.name === Roles.WAITER}
             />
           ))}
@@ -101,6 +130,12 @@ const OrdersList: React.FC<IOrdersList> = ({ orders }) => {
         orderDish={currentDish}
         onClose={modalClose}
         onOkClick={onOkClick}
+      />
+      <OrderModal
+        open={modalOrderOpen}
+        onClose={modalOrderClose}
+        onOkClick={onPayClick}
+        order={currentOrder}
       />
     </>
   );

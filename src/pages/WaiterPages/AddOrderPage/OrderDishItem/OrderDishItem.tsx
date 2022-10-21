@@ -25,7 +25,7 @@ const OrderDishItem: React.FC<IOrderDishItemProps> = ({
   );
 
   return (
-    <div className={styles.card} onClick={() => onClick(orderDish)}>
+    <div className={styles.card} onClick={(e) => onClick(orderDish)}>
       <IconPlus className={styles.delete} onClick={closeClick} />
       <img
         src={`${process.env.REACT_APP_API_URL}/${orderDish.dish.image}`}

@@ -16,7 +16,14 @@ const OrderItemDish: React.FC<IOrderItemDishProps> = ({
   onClick,
 }) => {
   return (
-    <div className={styles.dish} key={orderDish.id} onClick={onClick}>
+    <div
+      className={styles.dish}
+      key={orderDish.id}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+    >
       <img
         className={styles.image}
         src={`${process.env.REACT_APP_API_URL}/${orderDish.dish.image}`}

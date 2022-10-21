@@ -1,7 +1,7 @@
 import React from "react";
 
 import OrderItemDish from "../OrderItemDish/OrderItemDish";
-import Chip from "../Chip/Chip";
+import Chip, { ChipColors } from "../Chip/Chip";
 
 import { IOrder, IOrderDish } from "../../types/apiTypes";
 import { OrderDishStatuses } from "../../types/enums";
@@ -14,12 +14,14 @@ interface IOrderItemProps {
   order: IOrder;
   isWaiter?: boolean;
   onDishClick: (dish: IOrderDish) => void;
+  onClick: (order: IOrder) => void;
 }
 
 const OrderItem: React.FC<IOrderItemProps> = ({
   order,
   onDishClick,
   isWaiter = false,
+  onClick,
 }) => {
   const elapsedTime = React.useMemo(() => {
     const mins = Math.floor(
@@ -59,8 +61,18 @@ const OrderItem: React.FC<IOrderItemProps> = ({
     [order]
   );
 
+  const isOrderPaid = React.useMemo(() => order?.isPaid, [order]);
+  const paidStatusTitle = React.useMemo(
+    () => (isOrderPaid ? "Оплачено" : "Не оплачено"),
+    [isOrderPaid]
+  );
+  const paidStatusColor = React.useMemo<ChipColors>(
+    () => (isOrderPaid ? "green" : "red"),
+    [isOrderPaid]
+  );
+
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={() => onClick(order)}>
       <div className={styles.info}>
         <div className={styles.mainInfo}>
           <div className={styles.mainRow}>
@@ -95,6 +107,7 @@ const OrderItem: React.FC<IOrderItemProps> = ({
           {isWaiter && (
             <div className={styles.totalInfo}>
               <span>Общая сумма: {order.totalPrice}р</span>
+              <Chip title={paidStatusTitle} color={paidStatusColor} />
             </div>
           )}
         </div>

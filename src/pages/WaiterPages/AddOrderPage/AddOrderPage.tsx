@@ -103,12 +103,12 @@ const AddOrderPage = () => {
         </div>
       ) : (
         <>
-          <h2>Общая стоимость: {totalPrice}</h2>
           <Order
             dishes={order.orderDishes}
             onDelete={onItemDelete}
             onClick={onChooseDish}
           />
+          <h2>Общая стоимость: {totalPrice}</h2>
           <Button
             title="Отправить на кухню"
             onClick={() => setChooseTableNumberModalOpen(true)}

@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 import { orderApi } from "../../api/api";
-import { RootState, AppThunk } from "../store";
-import { ICreateOrder, IDish, IOrder, IOrderDish } from "../../types/apiTypes";
-import { LoadingStatuses, OrderStatuses } from "../../types/enums";
+import { ICreateOrder, IOrder, IOrderDish } from "../../types/apiTypes";
+import { LoadingStatuses } from "../../types/enums";
 
 export interface OrdersState {
   order: ICreateOrder | null;
@@ -78,7 +76,7 @@ export const ordersSlice = createSlice({
     addOrder(state, action: PayloadAction<IOrder>) {
       state.orders?.push(action.payload);
     },
-    updateStatus(state, action: PayloadAction<IOrderDish>) {
+    updateOrderDish(state, action: PayloadAction<IOrderDish>) {
       console.log(action.payload);
       state.orders!.forEach((order) => {
         if (order.id === action.payload.order.id) {
@@ -89,6 +87,11 @@ export const ordersSlice = createSlice({
             }
           });
         }
+      });
+    },
+    updateOrder(state, action: PayloadAction<IOrder>) {
+      state.orders = state.orders!.map((order) => {
+        return order.id === action.payload.id ? action.payload : order;
       });
     },
   },
@@ -138,7 +141,8 @@ export const {
   removeDishFromOrder,
   updateDishInOrder,
   addOrder,
-  updateStatus,
+  updateOrderDish,
+  updateOrder,
 } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

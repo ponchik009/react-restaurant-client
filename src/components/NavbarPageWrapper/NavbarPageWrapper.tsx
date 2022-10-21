@@ -13,7 +13,11 @@ import { ReactComponent as IconBack } from "../../assets/icons/IconBack.svg";
 import styles from "./NavbarPageWrapper.module.css";
 import { Roles } from "../../types/enums";
 import { socket } from "../../api/api";
-import { addOrder, updateStatus } from "../../store/orderSlice/ordersSlice";
+import {
+  addOrder,
+  updateOrder,
+  updateOrderDish,
+} from "../../store/orderSlice/ordersSlice";
 import { IOrder, IOrderDish } from "../../types/apiTypes";
 
 const NavbarPageWrapper = () => {
@@ -36,14 +40,15 @@ const NavbarPageWrapper = () => {
     if (user!.role.name === Roles.KITCHEN) {
       socket.on("orderCreated", (order: IOrder) => dispatch(addOrder(order)));
       socket.on("startedCooking", (dishOrder: IOrderDish) =>
-        dispatch(updateStatus(dishOrder))
+        dispatch(updateOrderDish(dishOrder))
       );
       socket.on("endedCooking", (dishOrder: IOrderDish) =>
-        dispatch(updateStatus(dishOrder))
+        dispatch(updateOrderDish(dishOrder))
       );
       socket.on("deliveredDish", (dishOrder: IOrderDish) =>
-        dispatch(updateStatus(dishOrder))
+        dispatch(updateOrderDish(dishOrder))
       );
+      socket.on("paidOrder", (order: IOrder) => dispatch(updateOrder(order)));
     }
 
     if (user!.role.name === Roles.WAITER) {
@@ -56,19 +61,24 @@ const NavbarPageWrapper = () => {
         "startedCooking",
         (dishOrder: IOrderDish) =>
           dishOrder.order.waiter.id === user!.id &&
-          dispatch(updateStatus(dishOrder))
+          dispatch(updateOrderDish(dishOrder))
       );
       socket.on(
         "endedCooking",
         (dishOrder: IOrderDish) =>
           dishOrder.order.waiter.id === user!.id &&
-          dispatch(updateStatus(dishOrder))
+          dispatch(updateOrderDish(dishOrder))
       );
       socket.on(
         "deliveredDish",
         (dishOrder: IOrderDish) =>
           dishOrder.order.waiter.id === user!.id &&
-          dispatch(updateStatus(dishOrder))
+          dispatch(updateOrderDish(dishOrder))
+      );
+      socket.on(
+        "paidOrder",
+        (order: IOrder) =>
+          order.waiter.id === user!.id && dispatch(updateOrder(order))
       );
     }
   }, []);

@@ -51,6 +51,12 @@
   align-items: center;
 }
 
+.totalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .statuses {
   display: flex;
   flex-direction: column;
