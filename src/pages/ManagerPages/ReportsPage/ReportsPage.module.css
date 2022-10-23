@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* align-items: center; */
+}
+
+.dates {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}

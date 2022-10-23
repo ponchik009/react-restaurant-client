@@ -71,3 +71,12 @@ export interface IOrder {
   waiter: IUser;
   orderDishes: IOrderDish[];
 }
+
+export interface IReportByDishesItem {
+  id: number;
+  name: string;
+  currentPrice: number;
+  count: number;
+  totalPrice: number;
+  percent: number;
+}

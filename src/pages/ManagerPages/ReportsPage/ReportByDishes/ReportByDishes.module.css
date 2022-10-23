@@ -1,0 +1,30 @@
+.reportHeader tr {
+  /* display: flex;
+  gap: 8px; */
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reportHeader td {
+  border-spacing: 8px;
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+
+  color: #dd8a0f;
+
+  cursor: pointer;
+}
+
+.reportBody td {
+  width: fit-content;
+}
+
+.cell {
+  border: 1px solid black;
+  padding: 4px;
+}

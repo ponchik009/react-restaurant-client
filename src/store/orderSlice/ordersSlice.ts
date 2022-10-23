@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { orderApi } from "../../api/api";
-import { ICreateOrder, IOrder, IOrderDish } from "../../types/apiTypes";
+import {
+  ICreateOrder,
+  IOrder,
+  IOrderDish,
+  IReportByDishesItem,
+} from "../../types/apiTypes";
 import { LoadingStatuses } from "../../types/enums";
 
 export interface OrdersState {
@@ -11,6 +16,8 @@ export interface OrdersState {
   orders: IOrder[] | null;
   fetchOrdersStatus: LoadingStatuses;
   fetchOrdersError: null | string;
+
+  reportByDishes: IReportByDishesItem[] | null;
 }
 
 const initialState: OrdersState = {
@@ -20,6 +27,7 @@ const initialState: OrdersState = {
   orders: null,
   fetchOrdersStatus: LoadingStatuses.FULFILED,
   fetchOrdersError: null,
+  reportByDishes: null,
 };
 
 export const createOrder = createAsyncThunk(
@@ -42,6 +50,13 @@ export const fetchOrdersByWaiter = createAsyncThunk(
   "orders/fetchOrdersByWaiter",
   async () => {
     return orderApi.getOrdersByWaiter();
+  }
+);
+
+export const fetchReportByDishes = createAsyncThunk(
+  "orders/fetchReportByDishes",
+  async ({ dateStart, dateEnd, ids }: any) => {
+    return orderApi.getReportByDishes(ids, dateStart, dateEnd);
   }
 );
 
@@ -131,7 +146,12 @@ export const ordersSlice = createSlice({
       .addCase(fetchOrdersByWaiter.rejected, (state, action) => {
         state.fetchOrdersError = "Не удалось получить список заказов";
         state.fetchOrdersStatus = LoadingStatuses.REJECTED;
-      });
+      })
+      .addCase(fetchReportByDishes.pending, (state) => {})
+      .addCase(fetchReportByDishes.fulfilled, (state, action) => {
+        state.reportByDishes = action.payload;
+      })
+      .addCase(fetchReportByDishes.rejected, (state, action) => {});
   },
 });
 

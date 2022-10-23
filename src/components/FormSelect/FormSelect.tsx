@@ -15,6 +15,7 @@ interface IFormSelect {
   rules: any;
   name: string;
   title?: string;
+  isMulti?: boolean;
   placeholder: string;
   options: IOption[];
 }
@@ -27,6 +28,7 @@ const FormSelect: React.FC<IFormSelect> = ({
   title,
   placeholder,
   options,
+  isMulti = false,
 }) => {
   return (
     <div className={styles.inputBlock}>
@@ -42,6 +44,7 @@ const FormSelect: React.FC<IFormSelect> = ({
             options={options}
             placeholder={placeholder}
             isSearchable={false}
+            isMulti={isMulti}
           />
         )}
       />
