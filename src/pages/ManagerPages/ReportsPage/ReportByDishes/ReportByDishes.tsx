@@ -67,17 +67,17 @@ const ReportByDishes: React.FC<IReportByDishesProps> = ({ report }) => {
     <table className={styles.report}>
       <thead className={styles.reportHeader}>
         <tr className={styles.row}>
-          <td className={styles.cell} onClick={() => changeSort("№")}>
+          {/* <td className={styles.cell} onClick={() => changeSort("№")}>
             №
-          </td>
+          </td> */}
           <td className={styles.cell} onClick={() => changeSort("name")}>
             Название
           </td>
-          <td className={styles.cell} onClick={() => changeSort("count")}>
-            Кол-во заказов, ед.
-          </td>
           <td className={styles.cell} onClick={() => changeSort("price")}>
             Текущая цена, руб.
+          </td>
+          <td className={styles.cell} onClick={() => changeSort("count")}>
+            Кол-во заказов, ед.
           </td>
           <td className={styles.cell} onClick={() => changeSort("%")}>
             % в заказах
@@ -90,15 +90,20 @@ const ReportByDishes: React.FC<IReportByDishesProps> = ({ report }) => {
       <tbody className={styles.reportBody}>
         {sortedReport.map((item, index) => (
           <tr key={item.name} className={styles.row}>
-            <td className={classNames(styles.cell, styles.number)}>
+            {/* <td className={classNames(styles.cell, styles.number)}>
               {item.id}
-            </td>
-            <td className={classNames(styles.cell)}>{item.name}</td>
-            <td className={classNames(styles.cell, styles.number)}>
-              {item.count}
+            </td> */}
+            <td
+              className={classNames(styles.cell)}
+              style={{ textAlign: "left", paddingLeft: "8px" }}
+            >
+              {item.name}
             </td>
             <td className={classNames(styles.cell, styles.number)}>
               {item.currentPrice}
+            </td>
+            <td className={classNames(styles.cell, styles.number)}>
+              {item.count}
             </td>
             <td className={classNames(styles.cell, styles.number)}>
               {item.percent}
@@ -109,12 +114,21 @@ const ReportByDishes: React.FC<IReportByDishesProps> = ({ report }) => {
           </tr>
         ))}
         <tr className={styles.row}>
-          <td className={styles.cell}>Итого</td>
+          <td
+            className={styles.cell}
+            colSpan={4}
+            style={{ textAlign: "left", paddingLeft: "8px", fontWeight: 700 }}
+          >
+            ИТОГО
+          </td>
           {/* <td className={styles.cell}></td>
           <td className={styles.cell}></td>
           <td className={styles.cell}></td>
           <td className={styles.cell}></td> */}
-          <td className={classNames(styles.cell, styles.number)} rowSpan={4}>
+          <td
+            className={classNames(styles.cell, styles.number)}
+            style={{ fontWeight: 700 }}
+          >
             {sortedReport.reduce((prev, cur) => prev + cur.totalPrice, 0)}
           </td>
         </tr>
