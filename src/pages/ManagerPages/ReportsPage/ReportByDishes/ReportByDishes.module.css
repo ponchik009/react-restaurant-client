@@ -18,6 +18,8 @@
   color: #dd8a0f;
 
   cursor: pointer;
+
+  text-align: center;
 }
 
 .reportBody td {
@@ -27,4 +29,10 @@
 .cell {
   border: 1px solid black;
   padding: 4px;
+
+  text-align: center;
+}
+
+.number {
+  text-align: right;
 }

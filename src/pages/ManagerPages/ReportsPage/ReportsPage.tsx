@@ -40,7 +40,7 @@ const ReportsPage = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Отчёт по блюдам</h1>
+      <h1 style={{ fontSize: "26px" }}>Отчёт по блюдам</h1>
       <form onSubmit={handleSubmit(getReport)} className={styles.form}>
         <div className={styles.dates}>
           с

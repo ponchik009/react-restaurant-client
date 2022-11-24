@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 import { IReportByDishesItem } from "../../../../types/apiTypes";
 
@@ -73,32 +74,50 @@ const ReportByDishes: React.FC<IReportByDishesProps> = ({ report }) => {
             Название
           </td>
           <td className={styles.cell} onClick={() => changeSort("count")}>
-            Общее кол-во заказов
-          </td>
-          <td className={styles.cell} onClick={() => changeSort("total")}>
-            Общая сумма выручки
+            Кол-во заказов, ед.
           </td>
           <td className={styles.cell} onClick={() => changeSort("price")}>
-            Цена на текущий момент
+            Текущая цена, руб.
           </td>
           <td className={styles.cell} onClick={() => changeSort("%")}>
-            Процент присутствия в заказах
+            % в заказах
+          </td>
+          <td className={styles.cell} onClick={() => changeSort("total")}>
+            Выручка, руб.
           </td>
         </tr>
       </thead>
       <tbody className={styles.reportBody}>
         {sortedReport.map((item, index) => (
           <tr key={item.name} className={styles.row}>
-            <td className={styles.cell}>
-              {isAscSort ? index + 1 : sortedReport.length - index}
+            <td className={classNames(styles.cell, styles.number)}>
+              {item.id}
             </td>
-            <td className={styles.cell}>{item.name}</td>
-            <td className={styles.cell}>{item.count}</td>
-            <td className={styles.cell}>{item.totalPrice}</td>
-            <td className={styles.cell}>{item.currentPrice}</td>
-            <td className={styles.cell}>{item.percent}</td>
+            <td className={classNames(styles.cell)}>{item.name}</td>
+            <td className={classNames(styles.cell, styles.number)}>
+              {item.count}
+            </td>
+            <td className={classNames(styles.cell, styles.number)}>
+              {item.currentPrice}
+            </td>
+            <td className={classNames(styles.cell, styles.number)}>
+              {item.percent}
+            </td>
+            <td className={classNames(styles.cell, styles.number)}>
+              {item.totalPrice}
+            </td>
           </tr>
         ))}
+        <tr className={styles.row}>
+          <td className={styles.cell}>Итого</td>
+          {/* <td className={styles.cell}></td>
+          <td className={styles.cell}></td>
+          <td className={styles.cell}></td>
+          <td className={styles.cell}></td> */}
+          <td className={classNames(styles.cell, styles.number)} rowSpan={4}>
+            {sortedReport.reduce((prev, cur) => prev + cur.totalPrice, 0)}
+          </td>
+        </tr>
       </tbody>
     </table>
   );
